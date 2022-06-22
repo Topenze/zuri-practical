@@ -14,6 +14,7 @@
   margin-bottom: 40px;
   font-weight: bold;
   text-transform: capitalize;
+
 }
 @media screen and (max-width: 767px) {
   .quiz_container .bundle_heading {
@@ -249,9 +250,3 @@
   text-transform:uppercase;
   color:#1c9666;
 }
-/* #prev {
- display:none;
- }
- #start {
- display:none;
- } */
