@@ -1,0 +1,172 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<nav class="shifter-navigation no-fouc" data-section-id="{{ section.id }}" data-section-type="mobile-navigation">
+  {% if section.settings.search %}
+  <div class="search">
+    <form role="search" action="/search" method="get">
+      <input type="hidden" name="type" value="product">
+      <input type="text" name="q" id="q" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.search.placeholder' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.placeholder' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315719' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+    </form>
+  </div>
+  {% endif %}
+  <ul id="accordion" role="navigation">
+    {% for link in linklists[section.settings.main_nav].links %}
+      {% if link.links != blank %}
+        <li class="accordion-toggle" aria-haspopup="true" aria-expanded="false">
+          <a href="{{ link.url }}">
+            {% comment %}ly_code_replace_for_[ link.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}
+          </a>
+        </li>
+
+        <div class="accordion-content">
+          <ul class="sub">
+            {% for sub_link in link.links %}
+              {% if sub_link.links != blank %}
+                <div class="accordion-toggle2" aria-haspopup="true" aria-expanded="false">
+                  <a href="{{ sub_link.url }}">
+                    {% comment %}ly_code_replace_for_[ sub_link.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with sub_link render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}
+                  </a>
+                </div>
+                <div class="accordion-content2">
+                  <ul class="sub">
+                    {% for sub_sub_link in sub_link.links %}
+                      <li>
+                        <a href="{{ sub_sub_link.url }}">
+                          {% comment %}ly_code_replace_for_[ sub_sub_link.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with sub_sub_link render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% else %}
+                <li>
+                  <a href="{{ sub_link.url }}">
+                    {% comment %}ly_code_replace_for_[ sub_link.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with sub_link render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <li>
+          <a href="{{ link.url }}">
+            {% comment %}ly_code_replace_for_[ link.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+      {% if shop.customer_accounts_enabled %}
+        {% if customer  %}
+        <li>
+          <a href="/account">
+            {% comment %}ly_i18n_replace_for_[ 'customer.account.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.account.title' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315720' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+          </a>
+        </li>
+        <li>
+          <a href="/account/logout" class="logout-link">
+           {% comment %}ly_i18n_replace_for_[ 'customer.account.logout' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.account.logout' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315721' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+          </a>
+        </li>
+        {% else %}
+        <li>
+          <a href="/account/login">
+            {% comment %}ly_i18n_replace_for_[ 'customer.account.signup' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.account.signup' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315722' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+          </a>
+        </li>
+        {% endif %}
+      {% endif %}
+  </ul>
+  {% include 'social-icons' %}
+</nav>
+
+<style>
+  .shifter-enabled nav.shifter-navigation {
+      background: {{ section.settings.background }};
+      color: {{ section.settings.color }};
+  }
+  nav.shifter-navigation ul li a,
+  nav.shifter-navigation .accordion-toggle,
+  nav.shifter-navigation .accordion-toggle2,
+  nav.shifter-navigation .accordion-toggle2 a {
+    color: {{ section.settings.color }};
+  }
+  ul#accordion li,
+  .accordion-toggle2 {
+    border-bottom: 1px solid {{ section.settings.border_color }};
+  }
+  {% if section.settings.social_icons %}
+    nav.shifter-navigation ul#social-icons li {
+      background: {{ section.settings.icon_background }};
+    }
+    nav.shifter-navigation ul#social-icons li a {
+      color: {{ section.settings.icon_color }};
+    }
+  {% endif %}
+</style>
+
+{% schema %}
+  {
+    "name": "Mobile navigation",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Navigation"
+      },
+      {
+        "type": "link_list",
+        "id": "main_nav",
+        "label": "Choose main menu",
+        "default":"main-menu"
+      },
+      {
+        "type":"checkbox",
+        "id":"search",
+        "label": "Show search",
+        "default": true
+      },
+      {
+         "type": "header",
+         "content": "Style"
+      },
+      {
+        "type": "color",
+        "id": "color",
+        "label": "Text color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Background",
+        "default": "#1e1e1e"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "Borders",
+        "default": "#3e3e3e"
+      },
+      {
+        "type":"header",
+        "content":"Social icons"
+      },
+      {
+        "type":"checkbox",
+        "id":"social_icons",
+        "label": "Show social icons",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "icon_color",
+        "label": "Icon color",
+        "default": "#1e1e1e"
+      },
+      {
+        "type": "color",
+        "id": "icon_background",
+        "label": "Icon background",
+        "default": "#f8f8f8"
+      }
+	  ]
+  }
+{% endschema %}

@@ -1,0 +1,51 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<script id="product-json" type="application/json">
+  {
+      "id": {{ product.id | json }},
+      "title": {% comment %}ly_code_replace_for_[ product.title | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+      "handle": {{ product.handle | json }},
+      "description": {% comment %}ly_code_replace_for_[ product.description | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-description' with product render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+      "vendor": {% comment %}ly_code_replace_for_[ product.vendor | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-vendor' with product render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+      "type": {% comment %}ly_code_replace_for_[ product.type | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-type' with product render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+      "tags": {{ product.tags | json }},
+      "price": {{ bold_price | json }},
+      "price_min": {{ bold_price_min | json }},
+      "price_max": {{ bold_price_max | json }},
+      "available": {{ product.available | json }},
+      "price_varies": {{ bold_price_varies | json }},
+      "compare_at_price_min": {{ bold_compare_at_price_min | json }},
+      "compare_at_price_max": {{ bold_compare_at_price_max | json }},
+      "compare_at_price_varies": {{ bold_compare_at_price_varies | json }},
+      "variants": [{% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+        {
+          "id": {{ variant.id | json }},
+          "title": {% comment %}ly_code_replace_for_[ variant.title | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with variant render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+          "option1": {% comment %}ly_code_replace_for_[ variant.option1 | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-option1' with variant render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+          "option2": {% comment %}ly_code_replace_for_[ variant.option2 | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-option2' with variant render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+          "option3": {% comment %}ly_code_replace_for_[ variant.option3 | json ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-option3' with variant render:true %}{% endcapture %}{{ ly_translation | json }}{% comment %}ly_code_replace_end{% endcomment %},
+          "featured_image": {
+              "id": {{ variant.image.id | json }},
+              "product_id": {{ variant.image.id | json }},
+              "position": {{ variant.image.position | json }},
+              "alt": {{ variant.image.alt | json }},
+              "width": {{ variant.image.width | json }},
+              "height": {{ variant.image.height | json }},
+              "src": {{ variant.image.src | json }}
+          },
+          "available": {{ variant.available | json }},
+          "price": {{ bold_variant_price | json }},
+          "compare_at_price": {{ variant.compare_at_price | json }},
+          "inventory_management": {{ variant.inventory_management |json }},
+          "inventory_quantity": {{ variant.inventory_quantity | json }},
+          "sku": {{ variant.sku | json }},
+          "weight": {{ variant.weight | json }},
+          "weight_unit": {{ variant.weight_unit | json }},
+          "weight_in_unit": {{ variant.weight_in_unit | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}],
+      "images": {{ product.images | json }},
+      "featured_image": {{ product.featured_image | json }},
+      "options": {{ product.options | json }},
+      "url": {{ product.url | json }}
+  }
+</script>

@@ -1,0 +1,135 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+  {% form 'product', product, data-product-form:product_form_config %}
+    {% if section.settings.show_vendor %}
+      <h3>{% comment %}ly_i18n_replace_for_[ 'products.product.designer' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.designer' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316206' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}: {% comment %}ly_code_replace_for_[ product.vendor ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-vendor' with product render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h3>
+      <div class="clear"></div>
+    {% endif %}
+
+    {%- if settings.show_multiple_currencies -%}
+      {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_variant_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{% assign price = bold_variant_price | money_with_currency | prepend: geolizr_prepend_code | append: "</span>"%}
+      {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: current_variant.compare_at_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{% assign compare_price = current_variant.compare_at_price | money_with_currency | prepend: geolizr_prepend_code | append: "</span>"%}
+    {%- else -%}
+      {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_variant_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{% assign price = bold_variant_price | money | prepend: geolizr_prepend_code | append: "</span>"%}
+      {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: current_variant.compare_at_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{% assign compare_price = current_variant.compare_at_price | money | prepend: geolizr_prepend_code | append: "</span>"%}
+    {%- endif -%}
+    {%- if current_variant.compare_at_price > bold_variant_price -%}
+      {% assign onsale = true %}
+    {%- endif -%}
+<a href="#looxReviews"><div class="loox-rating" data-id="{{ product.id }}" data-rating="{% comment %}ly_code_replace_for_[ product.metafields.loox.avg_rating ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'avg_rating' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.avg_rating  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-raters="{% comment %}ly_code_replace_for_[ product.metafields.loox.num_reviews ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'num_reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.num_reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"></div></a>
+
+
+    <div id="product-price">
+      <span class="product-price" itemprop="price">
+        <span class="{% if onsale %}onsale{% endif %} money">{{ price }}</span>
+      </span>
+      {% if onsale %}
+        <span class="was">
+          <span class="money">{{ compare_price }}</span>
+        </span>
+      {% else %}
+        <span class="was"></span>
+      {% endif %}
+    </div><div class="clear"></div>
+
+    {% if product.options.size > 1 %}
+     <div class="select" {% if bold_variants_size == 1 or section.settings.product_variants == 'swatches' %}style="display: none;"{% endif %}>
+       <select id="product-select-{{ product.id }}" name='id'>
+         {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+           <option value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
+             {% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with variant render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_variant_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_variant_price | money | prepend: geolizr_prepend_code | append: "</span>"}}
+           </option>
+         {% endfor %}
+       </select>
+     </div>
+      {% if section.settings.product_variants == 'swatches' %}
+        {% for option in product.options_with_values %}
+          {% include "swatch" %}
+        {% endfor %}
+      {% endif %}
+    {% elsif product.options.size == 1 and bold_variants_size > 1 %}
+    <div class="select" {% if bold_variants_size == 1 or section.settings.product_variants == 'swatches' %}style="display: none;"{% endif %}>
+       <label>{{ product.options[0] }}</label>
+       <select id="product-select-{{ product.id }}" name='id'>
+         {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+           <option data-sku="{{ variant.sku }}" value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
+             {% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with variant render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_variant_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_variant_price | money | prepend: geolizr_prepend_code | append: "</span>"}}
+           </option>
+         {% endfor %}
+       </select>
+     </div>
+     {% if section.settings.product_variants == 'swatches' %}
+       {% for option in product.options_with_values %}
+         {% include "swatch" %}
+       {% endfor %}
+     {% endif %}
+    {% else %}
+     <div class="what-is-it">
+       {% if product.options.first != 'Title' %}
+         <label>{{ product.options.first }}:</label>
+         {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+           <span class="it-is">{% comment %}ly_code_replace_for_[ variant.option1 | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-option1' with variant render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+         {% endfor %}
+       {% endif %}
+     </div>
+     <div class="product-variants"></div><!-- product variants -->
+     <input  type="hidden" id="{{ variant.id }}" name="id" data-sku="{{ variant.sku }}" value="{{ bold_selected_or_first_available_variant.id }}" />
+    {% endif %}
+
+    {% if section.settings.show_sku %}
+      <div class="sku">
+        <label style="display: inline-block; line-height: 1.6em;">{% comment %}ly_i18n_replace_for_[ 'customer.order.details.sku' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.sku' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316207' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}:</label> <span class="variant_sku">{{ current_variant.sku }}</span>
+      </div><div class="clear"></div>
+    {% endif %}
+
+    {% if current_variant.inventory_quantity > 1 and section.settings.show_quantity_selector %}
+     <div class="product-qty selector-wrapper">
+        <h5>{% comment %}ly_i18n_replace_for_[ 'products.product.quantity' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.quantity' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316208' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h5>
+        <a class="downer quantity-control-down">-</a>
+        <input min="1" type="text" name="quantity" class="product-quantity" value="1" {% unless current_variant.inventory_management == blank or current_variant.inventory_policy == 'continue' %} max="{{ current_variant.inventory_quantity }}" {% endunless %} />
+        <a class="up quantity-control-up">+</a>
+     </div>
+     <div class="clear"></div>
+   {% endif %}
+    {% if current_variant.available %}
+      <div class="product-add">
+        <input id="AddToCart" type="submit" name="button" class="add{% if section.settings.show_payment_button %} secondary-button{% endif %}" value="{% comment %}ly_i18n_replace_for_[ 'products.product.add_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.add_to_cart' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316209' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+      </div>
+    {% else %}
+      <div class="product-add">
+        <input id="AddToCart" type="submit" name="button" class="add{% if section.settings.show_payment_button %} secondary-button{% endif %}" value="{% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316210' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_payment_button %}
+    {{ form | payment_button }}
+    {% endif %}
+
+    {% if section.settings.back_in_stock %}
+    <div class="back_in_stock"{% if current_variant.available %} style="display: none"{% endif %}>
+        {{ section.settings.back_in_stock_text }}
+        {%- assign vnt = variant.title -%}
+    </div>
+    {% endif %}
+
+
+
+{% endform %}
+
+{% comment %} Start Variant Table short code {% endcomment %}
+{% unless product.has_only_default_variant %}
+<div id="cws_var_table"></div>
+{% endunless %}
+{% comment %} Ended Variant Table short code {% endcomment %}
+
+{%- unless bundle_loaded == 'true' -%}
+{%- include 'shappify-bdl-load-bundle' -%}
+{%- assign bundle_loaded = 'true' -%}
+{%- endunless -%} 
+
+
+{% if section.settings.back_in_stock %}
+{% include 'back-in-stock-form' %}
+{% endif %}

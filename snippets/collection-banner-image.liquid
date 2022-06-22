@@ -1,0 +1,10 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
+
+{% assign img_url = banner | file_img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+<div class="collection-banner box-ratio">
+  <img class="lazyload lazyload-fade"
+    data-src="{{ img_url }}"
+    data-sizes="auto"
+    alt="{% comment %}ly_code_replace_for_[ collection.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+</div>

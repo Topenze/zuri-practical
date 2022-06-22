@@ -1,0 +1,42 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+{% if settings.breadcrumb %}
+  <div id="breadcrumb" class="desktop-12 tablet-6 mobile-3 span-12">
+    <a href="{{ langify_shop_url }}" class="homepage-link" title="{% comment %}ly_i18n_replace_for_[ 'general.breadcrumbs.home' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.breadcrumbs.home' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316115' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">{% comment %}ly_i18n_replace_for_[ 'general.breadcrumbs.home' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.breadcrumbs.home' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316115' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+    {% if template contains "product" %}
+    {% if collection %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    {% if collection.handle %}
+    {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+    {% comment %}ly_code_replace_for_[ collection.title | link_to: url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation | link_to: url }}{% comment %}ly_code_replace_end{% endcomment %}
+    {% elsif collection.all_products_count > 0 and collection.products.first.type == collection.title %}
+    {{ collection.title | link_to_type }}
+    {% elsif collection.all_products_count > 0 and collection.products.first.vendor == collection.title %}
+    {{ collection.title | link_to_vendor }}
+    {% endif %}
+    {% else %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    {{ product.type | link_to_type }}
+    {% endif %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% elsif template == "article" %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    {% comment %}ly_code_replace_for_[ blog.title | link_to: blog.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with blog render:true %}{% endcapture %}{{ ly_translation | link_to: blog.url }}{% comment %}ly_code_replace_end{% endcomment %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% elsif template contains "collection" %}
+    {% if current_tags.size > 0 %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    {% comment %}ly_code_replace_for_[ collection.title | link_to: collection.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation | link_to: collection.url }}{% comment %}ly_code_replace_end{% endcomment %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    <span class="page-title">{{ current_tags.first }}</span>
+    {% else %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% endif %}
+    {% else %}
+    <span class="separator"><i class="la la-angle-right" aria-hidden="true"></i></span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% endif %}
+  </div>
+{% endif %}

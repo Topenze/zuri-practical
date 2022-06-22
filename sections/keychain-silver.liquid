@@ -1,0 +1,89 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div data-section-id="{{ section.id }}" data-section-type="page-section">
+  <div class="gridlock-fluid">
+    <div id="content" class="row">
+      <div id="page_content">
+        <div id='container' class="quiz_container">
+
+          <div id='quiz'>
+            <div class="bundle_option keychain keychain_silver">
+              <h2 class="text-center bundle_heading"><ly-as-20315712>Keychain color - Silver</ly-as-20315712></h2>
+              <div class="keychain_wrapper">
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-nude-silver" name="keychain-silver" value="traveller-charms-keychain-nude">
+                    <label for="keychain-nude-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_3.png?v=1626017344"/>   
+                      <span><ly-as-20315713>Nude</ly-as-20315713></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-grey-silver" name="keychain-silver" value="traveller-charms-keychain-grey">
+                    <label for="keychain-grey-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_2.png?v=1626017344"/>   
+                      <span><ly-as-20315714>Grey</ly-as-20315714></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-black-silver" name="keychain-silver" value="traveller-charms-keychain-black">
+                    <label for="keychain-black-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_4.png?v=1626017344"/>   
+                      <span><ly-as-20315715>Black</ly-as-20315715></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-brown-silver" name="keychain-silver" value="key-chain-brown">
+                    <label for="keychain-brown-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_1.png?v=1626015316"/>   
+                      <span><ly-as-20315716>Brown</ly-as-20315716></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-red-silver" name="keychain-silver" value="key-chain-red">
+                    <label for="keychain-red-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver-5.png?v=1626017344"/>   
+                      <span><ly-as-20315717>Red</ly-as-20315717></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="buttons">
+            <div class='button' id='next'><ly-as-20315718>Next</ly-as-20315718></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ {% comment %}ly_asset_replace_for_['bundle.css' | asset_url | stylesheet_tag ]_begin{% endcomment %}{% assign ly_asset = 'bundle.css' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  | stylesheet_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+
+ {% comment %}ly_asset_replace_for_['keychain-color.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'keychain-color.js' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

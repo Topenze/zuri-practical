@@ -1,0 +1,78 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+
+{% assign currency = '€' %}
+
+{% assign charmhandle = product.handle  | handleize %}
+
+<div class="line-item-property__field" id="countryData">
+  <div class="country_charm_wrapper">
+    {% if product.handle == '1-charm-silver' or product.handle == '1-charm-gold' %}
+    <div class="itemCount"></div>
+    {% else %}
+    <div class="count__wrapper">
+      <div class="itemCount"></div><div class="count_info"><ly-as-20316120>Country / City charms</ly-as-20316120></div>
+    </div>
+    {% endif %}
+      <div class="charmList">
+    <h3><ly-as-20316121>Charm List</ly-as-20316121></h3>
+    <div class="tokenData">
+      <p class="charmListNofn"><ly-as-20316122>Empty! Add charm(s) from the list above :)</ly-as-20316122></p>
+    </div>
+  </div>
+    <a class="button custom_btn"><span><ly-as-20316123>Add to cart</ly-as-20316123></span></a>
+    <h3 class="special_charm_heading"><ly-as-20316124>Country / City Charms</ly-as-20316124></h3>
+    <input class="search" placeholder="Type to search" />
+    <ul class="tokensList list">
+    </ul>
+    <div class="scroll-indicator" style="opacity: 1; visibility: visible;">
+      <ly-as-20316125>Scroll for more</ly-as-20316125>
+      <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
+        <path d="M6.38462 1V10.4231L10.4231 6.38462L11 6.89538L6 11.8954L1 6.89538L1.57692 6.38462L5.61538 10.4231V1H6.38462Z" fill="white" stroke="white" stroke-width="0.5"></path>
+      </svg>
+    </div>
+  </div>
+  <div class="christmas__charms">
+    <h3 class="special_charm_heading"><ly-as-20316126>Add Additional Special Charms</ly-as-20316126></h3>
+    <ul class="tokensList christmas_charms list">
+      {% for product in collections['special-charms-bundles'].products %}
+      
+      {% for variant in product.variants %}
+      {% assign variant_title = variant.title | handleize %}
+      
+      {% if variant_title == charmhandle %}
+        {% assign variant_Id = variant.id %}
+        {% assign variant_price = variant.price | money %}
+        {% assign variant_available = variant.available %}
+        
+        {% if variant.image != blank %}
+        {% assign image = variant.image | img_url:'200x' %}
+        {% else %}
+        {% assign image = product.featured_image | img_url:'200x' %}
+        {% endif %}
+      
+      
+      <li class="tokenVariant christmasVariant" data-park="{% comment %}ly_code_replace_for_[product.title]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ly_translation}}{% comment %}ly_code_replace_end{% endcomment %}" data-custom="null" data-price="{{variant.price}}" data-variant="{{variant_Id}}">
+        <span class="tokenTitle">
+          <span class="christmas_image">
+            <img src="{{ image }}" alt="{% comment %}ly_code_replace_for_[product.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"/>
+          </span>
+          {% comment %}ly_code_replace_for_[product.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}<span class="extra_charge">&nbsp;+{{variant_price}}</span>
+          <span class="add_plus add_country">+</span>
+        </span>
+      </li>	
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+    </ul>
+    <div class="scroll-indicator" style="opacity: 1; visibility: visible;">
+      <ly-as-20316125>Scroll for more</ly-as-20316125>
+      <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 6px;">
+        <path d="M6.38462 1V10.4231L10.4231 6.38462L11 6.89538L6 11.8954L1 6.89538L1.57692 6.38462L5.61538 10.4231V1H6.38462Z" fill="white" stroke="white" stroke-width="0.5"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+
+

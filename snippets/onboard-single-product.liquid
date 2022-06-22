@@ -1,0 +1,42 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div data-section-onboard>
+  <div class="section-title row">
+    <h2>
+      <a href="#">
+        <ly-as-20316158>Featured Product</ly-as-20316158>
+      </a>
+    </h2>
+  </div>
+  <div class="row">
+    <div class="featured-product-gallery desktop-6 tablet-3 mobile-3">
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    </div>
+
+    <div class="desktop-6 mobile-3">
+      <div class="product-description">
+        <h2>
+          <a href="#">
+            <ly-as-20316159>Your product's name</ly-as-20316159>
+          </a>
+        </h2>
+        <h3><ly-as-20316160>Sample Vendor</ly-as-20316160></h3>
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <p class="product-price">
+            <span class="product-price" itemprop="price">
+              9.99</span> <span class="was">13.99
+            </span>
+          </p>
+          <br/><span class="variant-sku"><ly-as-20316161>SKU-1234</ly-as-20316161></span>
+          <div class="product-add">
+            <input type="submit" name="button" class="add" value="Out of Stock" />
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="rte">
+          <ly-as-20316162>This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.</ly-as-20316162>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

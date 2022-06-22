@@ -1,0 +1,92 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<div class="ci">
+  {% if product.available %}
+    {% for col in product.collections %}
+      {% if col.handle == 'new' %}
+        <div class="new icn">{% comment %}ly_i18n_replace_for_[ 'products.general.new' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.new' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316214' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+      {% endif %}
+    {% endfor %}
+
+    {% if bold_price < bold_compare_at_price %}
+      <div class="sale-item icn">{% comment %}ly_i18n_replace_for_[ 'products.general.sale' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.sale' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316215' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+    {% endif %}
+
+  {% else %}
+    <div class="so icn">{% comment %}ly_i18n_replace_for_[ 'products.general.sold' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.sold' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316216' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+  {% endif %}
+
+    {% if product.featured_image %}
+      <a href="{{ product.url | within: collection }}" title="{% comment %}ly_code_replace_for_[ product.title | escape ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+        <div class="reveal">
+          {% include "basic-responsive-image", type: product.featured_image %}
+          <noscript>
+            <img src="{{ product.featured_image | img_url: '1024x' }}" alt="{{ product.featured_image.alt | escape }}">
+          </noscript>
+
+          {% if settings.image_flip and product.images.size > 1 %}
+            <div class="hidden">
+              {% include "basic-responsive-image", type: product.images[1] %}
+              <noscript>
+                <img src="{{ product.images[1] | img_url: '1024x' }}" alt="{{ product.images[1].alt | escape }}">
+              </noscript>
+            </div>
+          {% endif %}
+        </div>
+      </a>
+    {%- else -%}
+      {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+      {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+    {% if settings.quickview and settings.product_info != 'add_to_cart' %}
+  	{% if product.has_only_default_variant %} {% comment %} This Condition is added by cws team to remove the quick view btn from the variant products {% endcomment %}
+      <div class="product-info">
+        <a data-fancybox="quick-view" data-type="ajax" class="fancybox.ajax product-modal" rel="nofollow" href="{{ product.url | within: collection }}?view=quick">
+          {% comment %}ly_i18n_replace_for_[ 'products.general.quick_view' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.quick_view' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316217' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+        </a>
+      </div>
+  	{% endif %} {% comment %} Condition Ended by here by cws team {% endcomment %}
+    {% endif %}
+  </div>
+
+<div class="product-details">
+  <div class="title_price_flex">
+  <a href="{{ product.url | within: collection }}">
+    {% if settings.vendor %}
+      <h4>{% comment %}ly_code_replace_for_[ product.vendor ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-vendor' with product render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h4>
+    {% endif %}
+    <h3>{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h3>
+  </a>
+
+  {% unless product.template_suffix == 'not-for-sale' %}
+  <div class="price">
+    {% if bold_price < bold_compare_at_price %}
+      <div class="onsale">
+        <span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span>
+      </div>
+      <div class="was-listing">
+        <span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_compare_at_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_compare_at_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span>
+      </div>
+    {% else %}
+      <div class="prod-price">
+        {% if bold_price_varies %}
+          {% comment %}ly_i18n_replace_for_[ 'products.general.from' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316218' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} <span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_price_min -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_price_min | money | prepend: geolizr_prepend_code | append: "</span>"}}</span>
+        {% else %}
+          <span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: bold_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ bold_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  </div>
+
+  <div class="product_listing_options">
+    {% include 'product-grid-add' %}
+    {% comment %}
+    <div class="loox-rating" data-id="{{ product.id }}" data-rating="{% comment %}ly_code_replace_for_[ product.metafields.loox.avg_rating ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'avg_rating' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.avg_rating  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-raters="{% comment %}ly_code_replace_for_[ product.metafields.loox.num_reviews ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'num_reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.num_reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"></div>
+  {% if settings.show_reviews %}
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  {% endif %}
+    {% endcomment %}
+  </div>
+    {% endunless %}
+
+</div>

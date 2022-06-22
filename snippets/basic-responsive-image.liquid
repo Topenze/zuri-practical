@@ -1,0 +1,18 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{%- if type.size > 0 -%}
+  {% assign image_box_ratio = type.height | append: ".0" | times: 1 | divided_by: type.width | times: 100 | append: "%" %}
+  {% assign img_url = type | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+  {%- if template == 'product' -%}
+    {% assign imageid = product.id %}
+  {%- else -%}
+    {% assign imageid = image.id %}
+  {%- endif -%}
+
+  <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
+    <img class="lazyload lazyload-fade"
+      id="{{ imageid }}"
+      data-src="{{ img_url }}"
+      data-sizes="auto"
+      alt="{{ type.alt | escape }}">
+  </div>
+{%- endif -%}

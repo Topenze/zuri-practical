@@ -1,0 +1,126 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+{% assign option_name = option.name | downcase %}
+
+{% assign color_swatch_options = "color, colour" | split: ", " %}
+
+{% assign current_option = "option" | append: option.position %}
+
+{% assign other_options = "option1 option2 option3" | remove: current_option | strip | split: " " %}
+
+<div class="swatch clearfix" data-option-index="{{ option.position }}" data-other-options='{{ other_options | json }}'>
+  <h5>{{ option.name }}</h5>
+
+{%- assign optName = 'options' | append: forloop.index -%}
+{%- assign option_values = [optName] | default: option.values -%}
+{%- for value in option_values -%}
+    {% assign image_url = value | handle | append: '.png' | file_url %}
+
+    {% assign css_color = value | split: ' ' | last | handle %}
+
+    {% capture id %}swatch-{{ option.position }}-{{ value | handle }}{% endcapture %}
+
+    {% assign available = false %}
+
+    <!-- Checking Availability -->
+    {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+      {% unless variant.available %}
+        {% continue %}
+      {% endunless %}
+
+      {% unless variant[current_option] == value %}
+        {% continue %}
+      {% endunless %}
+
+      {% unless variant[other_options[0]] == current_variant[other_options[0]] %}
+        {% continue %}
+      {% endunless %}
+
+      {% unless variant[other_options[1]] == current_variant[other_options[1]] %}
+        {% continue %}
+      {% endunless %}
+
+      {% assign available = true %}
+    {% endfor %}
+
+    <!-- Building Variant Image -->
+    {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+      {% unless variant[current_option] == value %}
+        {% continue %}
+      {% endunless %}
+
+      {% unless variant[other_options[0]] == current_variant[other_options[0]] %}
+        {% continue %}
+      {% endunless %}
+
+      {% unless variant[other_options[1]] == current_variant[other_options[1]] %}
+        {% continue %}
+      {% endunless %}
+
+      {% assign variant_image_url = blank %}
+
+      {% if variant.image %}
+        {% assign variant_image_url =  variant.image | img_url: '100x' %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign checked = "" %}
+
+    {% if current_variant[current_option] == value %}
+      {% assign checked = 'checked="checked"' %}
+    {% endif %}
+
+    {% capture radio_button %}
+      <input type="radio" id="{{ id }}" name="{{ option_name }}" value="{{ value | escape }}" data-position="{{ option.position }}" {{ checked }} />
+    {% endcapture %}
+
+    {% capture sold_out_image %}
+      <img class="crossed-out" src="{% comment %}ly_asset_replace_for_[ 'soldout.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'soldout.png' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}" />
+    {% endcapture %}
+
+    {% capture regular_swatch %}
+      <div class="swatch-element {% unless available %}soldout{% endunless %}">
+        {{ radio_button }}
+
+        <label for="{{ id }}">
+          {{ value }}
+          {{ sold_out_image }}
+        </label>
+      </div>
+    {% endcapture %}
+
+    {% capture color_swatch %}
+      <div class="swatch-element color {% unless available %}soldout{% endunless %}">
+        <div class="tooltip">
+          {{ value }}
+        </div>
+
+        {{ radio_button }}
+
+        <label for="{{ id }}">
+          {{ sold_out_image }}
+          {% if template contains 'collection' %}
+          	{% assign swatch_type = settings.color_swatch_options %}
+          {% elsif template contains 'product' or template contains 'index' %}
+            {% assign swatch_type = section.settings.color_swatch_options %}
+          {% endif %}
+
+          {% if swatch_type == 'variant-image' and variant_image_url != blank %}
+            <img class="variant-image" src="{{ variant_image_url }}" alt="{{ value }}">
+          {% elsif section.settings.color_swatch_options == 'custom-image' %}
+              <div class="custom-image css-color" style="width: 40px; height: 40px; background-color: {{ css_color }}; background-image: url({{ image_url }});"></div>
+          {% else %}
+              <div class="css-color" style="width: 40px; height: 40px; background-color: {{ css_color }};"></div>
+          {% endif %}
+        </label>
+      </div>
+    {% endcapture %}
+
+    {% if color_swatch_options contains option_name %}
+      {{ color_swatch }}
+    {% else %}
+      {{ regular_swatch }}
+    {% endif %}
+  {% endfor %}
+</div>

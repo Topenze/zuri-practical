@@ -1,0 +1,124 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div class="section-title desktop-12 mobile-3">
+  <h1>{% comment %}ly_i18n_replace_for_[ 'customer.order.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.title' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316324' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ order.name }}</h1>
+</div>
+
+<div id="customer-wrapper" class="desktop-12 tablet-6 mobile-3">
+
+  {% if order.cancelled %}
+  <div id="order_cancelled" class="flash notice">
+    <h5 id="order_cancelled_title">{% comment %}ly_i18n_replace_for_[ 'customer.order.cancelled' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.cancelled' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316325' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} <span class="note">{{ order.cancelled_at | date: "%B %d, %Y %I:%M%p" }}</span></h5>
+    <span class="note">{% comment %}ly_i18n_replace_for_[ 'customer.order.cancelled_reason' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.cancelled_reason' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316326' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+  </div>
+  {% endif %}
+
+  <div class="note order_date">{% comment %}ly_i18n_replace_for_[ 'customer.order.date' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.date' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316327' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ order.created_at | date: "%B %d, %Y %I:%M%p" }}</div>
+
+  <div class="clear"></div>
+
+  <div id="order_address">
+    <div id="order_payment" class="desktop-6 tablet-3 mobile-3">
+      <h5 class="order_section_title">{% comment %}ly_i18n_replace_for_[ 'customer.order.billing_address' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.billing_address' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316328' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h5>
+      <p><span class="note">{% comment %}ly_i18n_replace_for_[ 'customer.order.payment_status' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.payment_status' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316329' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status_label }}</span></p>
+      <div class="address note">
+        <p>{{ order.billing_address.name }}</p>
+        <p>{{ order.billing_address.company }}</p>
+        <p>{{ order.billing_address.street }}</p>
+        <p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
+        <p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
+        <p>{{ order.billing_address.phone }}</p>
+      </div>
+    </div>
+    {% if order.shipping_address %}
+    <div id="order_shipping" class="desktop-6 tablet-3 mobile-3">
+      <h5 class="order_section_title">{% comment %}ly_i18n_replace_for_[ 'customer.order.shipping_address' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.shipping_address' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316330' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h5>
+      <p><span class="note">{% comment %}ly_i18n_replace_for_[ 'customer.order.fulfillment_status' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.fulfillment_status' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316331' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}:</span> <span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span></p>
+      <div class="address note">
+        <p>{{ order.shipping_address.name }}</p>
+        <p>{{ order.shipping_address.company }}</p>
+        <p>{{ order.shipping_address.street }}</p>
+        <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
+        <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+        <p>{{ order.shipping_address.phone }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="rte__table-wrapper desktop-12 tablet-6 mobile-3">
+    <table class="customer_table">
+      <thead>
+        <tr>
+        <th>{% comment %}ly_i18n_replace_for_[ 'customer.order.details.product' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.product' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316332' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</th>
+        <th>{% comment %}ly_i18n_replace_for_[ 'customer.order.details.sku' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.sku' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316333' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</th>
+        <th>{% comment %}ly_i18n_replace_for_[ 'customer.order.details.price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.price' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316334' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</th>
+        <th>{% comment %}ly_i18n_replace_for_[ 'customer.order.details.quantity' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.quantity' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316335' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</th>
+        <th>{% comment %}ly_i18n_replace_for_[ 'customer.order.details.total' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.total' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316336' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for line_item in order.line_items %}
+        <tr id="{{ line_item.id }}" class="{% cycle 'odd', 'even' %}">
+          <td class="product">
+            {% comment %}ly_code_replace_for_[ line_item.title | link_to: line_item.product.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with line_item render:true %}{% endcapture %}{{ ly_translation | link_to: line_item.product.url }}{% comment %}ly_code_replace_end{% endcomment %}
+            {% if line_item.line_level_discount_allocations.size > 0 %}
+              {% for discount_allocation in line_item.line_level_discount_allocations %}
+                <p class="onsale"><i class="la la-tag"></i> {% comment %}ly_i18n_replace_for_[ 'cart.general.discount_applied' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'cart.general.discount_applied' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316337' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {% comment %}ly_code_replace_for_[ discount_allocation.discount_application.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with discount_allocation.discount_application render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} (-<span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: discount_allocation.amount -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ discount_allocation.amount | money | prepend: geolizr_prepend_code | append: "</span>"}}</span>)</p>
+              {% endfor %}
+            {% endif %}
+            {% if line_item.fulfillment %}
+            <div class="note">
+              Fulfilled {{ line_item.fulfillment.created_at | date: "%b %d" }}
+              {% if line_item.fulfillment.tracking_number %}
+              <a href="{{ line_item.fulfillment.tracking_url }}">{{ line_item.fulfillment.tracking_company }} #{{ line_item.fulfillment.tracking_number}}</a>
+              {% endif %}
+            </div>
+            {% endif %}
+          </td>
+          <td class="sku note">{{ line_item.sku }}</td>
+          <td class="money"><span class="money {% if line_item.original_price > line_item.final_price or line_item.variant.compare_at_price > line_item.final_price %}onsale{% endif %}">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: line_item.final_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ line_item.final_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span><span class="money"><del style="margin-left:5px;">{% if line_item.original_price > line_item.final_price %}{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: line_item.original_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ line_item.original_price | money | prepend: geolizr_prepend_code | append: "</span>"}}{% elsif line_item.variant.compare_at_price > line_item.final_price %}{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: line_item.variant.compare_at_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ line_item.variant.compare_at_price | money | prepend: geolizr_prepend_code | append: "</span>"}}{% endif %}</del></span></td>
+          <td class="order_quantity">{{ line_item.quantity }}</td>
+          <td class="total money"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: line_item.final_line_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ line_item.final_line_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="order_summary note">
+          <td class="label" colspan="4">{% comment %}ly_i18n_replace_for_[ 'customer.order.details.subtotal' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.subtotal' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316338' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</td>
+          <td class="total money"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: order.line_items_subtotal_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ order.line_items_subtotal_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></td>
+        </tr>
+
+        {% for discount_application in order.cart_level_discount_applications %}
+        <tr class="order_summary discount onsale">
+          <td class="label" colspan="4">{% comment %}ly_i18n_replace_for_[ 'customer.order.discount' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.discount' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316339' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}: <i class="la la-tag"></i> {% comment %}ly_code_replace_for_[ discount_application.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with discount_application render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</td>
+          <td class="total money"><span class="money">(-{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: discount_application.total_allocated_amount -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ discount_application.total_allocated_amount | money | prepend: geolizr_prepend_code | append: "</span>"}})</span></td>
+        </tr>
+        {% endfor %}
+
+        {% for shipping_method in order.shipping_methods %}
+        <tr class="order_summary note">
+          <td class="label" colspan="4">{% comment %}ly_i18n_replace_for_[ 'customer.order.shipping' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.shipping' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316340' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} ({% comment %}ly_code_replace_for_[ shipping_method.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with shipping_method render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}):</td>
+          <td class="total money"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: shipping_method.price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ shipping_method.price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></td>
+        </tr>
+        {% endfor %}
+
+        {% for tax_line in order.tax_lines %}
+        <tr class="order_summary note">
+          <td class="label" colspan="4">{% comment %}ly_i18n_replace_for_[ 'customer.order.tax' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.tax' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316341' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} ({% comment %}ly_code_replace_for_[ tax_line.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with tax_line render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} {{ tax_line.rate | times: 100 }}%):</td>
+          <td class="total money"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: tax_line.price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ tax_line.price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></td>
+        </tr>
+        {% endfor %}
+        <tr class="cart_savings onsale">
+          <td class="label" colspan="4"><em>{% comment %}ly_i18n_replace_for_[ 'cart.general.savings' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'cart.general.savings' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316342' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</em></td>
+          <td class="cart-savings-amount"><em><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: order.total_discounts -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ order.total_discounts | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></em></td>
+        </tr>
+        <tr class="order_summary order_total">
+          <td class="label" colspan="4">{% comment %}ly_i18n_replace_for_[ 'customer.order.details.total' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'customer.order.details.total' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316336' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}:</td>
+          <td class="total money"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: order.total_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ order.total_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span> {{ order.currency }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>

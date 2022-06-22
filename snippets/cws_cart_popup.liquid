@@ -1,0 +1,32 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<div class="variant-cartlist" style="display:none;">
+   <div class="modal-content">
+      <div class="modal-header">
+         <button type="button" class="cart_close">×</button>
+         <h2 id="total_cnt"></h2>
+      </div>
+      <div class="modal-body">
+         <table class="cart_table">
+            <thead>
+                <tr id="cart_header"></tr>
+            </thead>
+			 <!-- DO NOT EDIT BELOW LINES [ CART ITEMS ARE WRITTEN IN THIS PART ] -->
+            <tbody id="variant-minicartlist">
+            </tbody>
+			<!-- ENDS HERE -->
+         </table>
+      </div>
+      <div class="modal-footer">
+         <div class="sub_total"></div>
+ 		 <div class="cart-button"></div>
+      </div>
+   </div>
+</div>
+
+<!-- Set Floating Cart -->
+<a title="Shopping Cart" id="flyToCart" class="cart_anchor" href="/cart" style='display:none;'>
+    <div id="variant_cartDiv" class="varitems-cart">{{ cart.item_count }}</div>
+</a>
+
+<!-- Set loader -->
+<div class="variant-loader" style='display:none;'><img src="{{ 'variant-loader.gif' | asset_img_url: '200x' }}" alt="Loading..."/></div>

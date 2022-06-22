@@ -1,0 +1,29 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div class="back-in-stock-snippet" style="display: none">
+  {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <style>
+    .back-in-stock-snippet { display: block! important; }
+    </style>
+      <p class="back_in_stock_success">{{ products.product.back_in_stock_confirm | t }}</p>
+    {% elsif form.errors %}
+    <style>
+    .back-in-stock-snippet { display: block! important; }
+    </style>
+      <p class="back_in_stock_error">{{ general.forms.post_error | t }}</p>
+    {% else %}
+        <label for="contact[email]">{{ products.product.back_in_stock | t }}</label>
+        {% if customer %}
+          <input type="hidden" name="contact[email]" value="{{ customer.email }}" />
+        {% else %}
+          <input required type="email" name="contact[email]" id="contact[email]" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.email_placeholder' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.email_placeholder' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316101' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}"/>
+        {% endif %}
+        <input type="hidden" name="contact[product]" value="{% comment %}ly_code_replace_for_[product.title]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ly_translation}}{% comment %}ly_code_replace_end{% endcomment %}">
+        {% if bold_variants_size > 1 %}
+        <input type="hidden" id="hidden_variant" name="contact[variant sku]" value="">
+        <input type="hidden" id="hidden_title" name="contact[variant title]" value="">
+        {% endif %}
+        <input type="hidden" id="message_body" name="contact[body]" value="Please let me know when {% comment %}ly_code_replace_for_[ product.title | remove: '"' ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation | remove: '"' }}{% comment %}ly_code_replace_end{% endcomment %} is available for purchase." />
+        <input class="submit" type="submit" value="{% comment %}ly_i18n_replace_for_[ 'contact.form.send' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'contact.form.send' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316102' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+    {% endif %}
+  {% endform %}
+</div>

@@ -1,0 +1,11 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% comment %}
+
+<script>
+    var UEVParams = {
+        "id" : "7bb2bd37fa23b02d5bd1a1821fe15a5e",
+        'UEVDomain' : "//shopify-apps.spur-i-t.com/upsell-on-exit-visit/call/rpc",
+        "apiScript" : "{{ 'api.jquery.js' | shopify_asset_url }}",
+        "domain" : "{{ shop.permanent_domain }}",
+		    }
+</script>
+{% endcomment %}

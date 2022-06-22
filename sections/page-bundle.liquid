@@ -1,0 +1,391 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div data-section-id="{{ section.id }}" data-section-type="page-section">
+  <div class="gridlock-fluid">
+    <div id='title'>
+      <h1 class="text-center">{% comment %}ly_code_replace_for_[page.title]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with page render:true %}{% endcapture %}{{ly_translation}}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+    </div>
+    <div id="content" class="row">
+      <div id="page_content">
+        <div id='container' class="quiz_container">
+         
+          <div id='quiz'>
+            <div class="bundle_option collection_type">
+              <h2 class="text-center bundle_heading"><ly-as-20315768>Choose your collection</ly-as-20315768></h2>
+
+              <div class="collection_type_wrapper">
+                <div class="collection_type">
+                  <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_charmnew.jpg?v=1628760581"
+                       alt="Silver collection"
+                       >
+                  <div class="radio_wrapper">
+                    <input type="radio" id="collection-color" name="collection_color" value="silver-collection">
+                    <label for="collection-color"><ly-as-20315769>Silver Collection</ly-as-20315769></label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                <div class="collection_type">
+                  <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_charm_new.jpg?v=1628760581"
+                       alt="Gold collection"
+                       >
+                  <div class="radio_wrapper">
+                    <input type="radio" id="gold-color" name="collection_color" value="gold-collection">
+                    <label for="gold-color"><ly-as-20315770>Gold Collection</ly-as-20315770></label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bundle_option bundle_collection silver-collection">
+              <h2 class="text-center bundle_heading"><ly-as-20315771>Silver collection</ly-as-20315771></h2>
+              <div class="collection_type_wrapper">
+                <div class="collection_type">
+                  <h2 class="bundle_subheading"><ly-as-20315772>Keychain + Charms</ly-as-20315772></h2>
+                  <div class="bundle_image_option">
+                    <div class="bundle_collection_image">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_2.png?v=1626017344" alt="Charms + Keychain (Silver)">
+                    </div>
+                    <div class="collection_options">
+                      <div class="radio_wrapper">
+                        <input type="radio" id="charm-1-silver" name="charm-silver" value="1-charm-keychain-silver">
+                        <label for="charm-1-silver"><ly-as-20315773>Keychain + 1 charm (€19)</ly-as-20315773></label>
+                        <div class="check"></div>
+                      </div>
+                      <div class="radio_wrapper">
+                        <input type="radio" id="charm-2-silver" name="charm-silver" value="3-charms-keychain-silver">
+                        <label for="charm-2-silver"><ly-as-20315774>Keychain + 3 charms (€33)</ly-as-20315774></label>
+                        <div class="check"></div>
+                      </div>
+                      <div class="radio_wrapper bundle_best">
+                        <input type="radio" id="charm-3-silver" name="charm-silver" value="10-charms-keychain-silver">
+                        <label for="charm-3-silver"><ly-as-20315775>Keychain + 10 charms (€49) -</ly-as-20315775> <span class="best__seller"><ly-as-20315776>Bestseller</ly-as-20315776></span></label>
+                        <div class="check"></div>
+                      </div>
+                      <div class="radio_wrapper">
+                        <input type="radio" id="charm-4-silver" name="charm-silver" value="25-charms-keychain-silver">
+                        <label for="charm-4-silver"><ly-as-20315777>Keychain + 25 charms (€79)</ly-as-20315777></label>
+                        <div class="check"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="collection_type">
+                  <h2 class="bundle_subheading"><ly-as-20315778>Charms only</ly-as-20315778></h2>
+                  <div class="bundle_image_option">
+                  <div class="bundle_collection_image">
+                  <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_only_charm.jpg?v=1626982516"
+                       alt="Charms Only Silver"
+                       >
+                  </div>
+                    <div class="collection_options">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-5-silver" name="charm-silver" value="single-charm-silver">
+                    <label for="charm-5-silver"><ly-as-20315779>1 charm (€5)</ly-as-20315779></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-6-silver" name="charm-silver" value="5-charms-silver">
+                    <label for="charm-6-silver"><ly-as-20315780>5 charms (€23)</ly-as-20315780></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper bundle_best">
+                    <input type="radio" id="charm-7-silver" name="charm-silver" value="20-charms-silver">
+                    <label for="charm-7-silver"><ly-as-20315781>20 charms (€69) -</ly-as-20315781> <span class="best__seller"><ly-as-20315776>Bestseller</ly-as-20315776></span></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-8-silver" name="charm-silver" value="40-charms-silver">
+                    <label for="charm-8-silver"><ly-as-20315782>40 charms (€99)</ly-as-20315782></label>
+                    <div class="check"></div>
+                  </div>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </div>
+			<div class="bundle_option keychain keychain_silver">
+              <h2 class="text-center bundle_heading"><ly-as-20315783>Keychain color (Silver Collection)</ly-as-20315783></h2>
+              <div class="keychain_wrapper">
+                {% if section.settings.keychain_silver_nude %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-nude-silver" name="keychain-silver" value="keychain-nude-silver-3">
+                    <label for="keychain-nude-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_3.png?v=1626017344"/>   
+                      <span><ly-as-20315784>Nude</ly-as-20315784></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_silver_grey %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-grey-silver" name="keychain-silver" value="keychain-grey-silver-2">
+                    <label for="keychain-grey-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_2.png?v=1626017344"/>   
+                      <span><ly-as-20315785>Grey</ly-as-20315785></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_silver_black %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-black-silver" name="keychain-silver" value="keychain-black-silver-1">
+                    <label for="keychain-black-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_4.png?v=1626017344"/>   
+                      <span><ly-as-20315786>Black</ly-as-20315786></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_silver_brown %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-brown-silver" name="keychain-silver" value="keychain-brown-silver-4">
+                    <label for="keychain-brown-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver_1.png?v=1626015316"/>   
+                      <span><ly-as-20315787>Brown</ly-as-20315787></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_silver_red %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-red-silver" name="keychain-silver" value="keychain-red-silver-5">
+                    <label for="keychain-red-silver">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/silver-5.png?v=1626017344"/>   
+                      <span><ly-as-20315788>Red</ly-as-20315788></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="bundle_option bundle_collection gold-collection">
+              <h2 class="text-center bundle_heading"><ly-as-20315789>Gold collection</ly-as-20315789></h2>
+              <div class="collection_type_wrapper">
+                <div class="collection_type">
+                  <h2 class="bundle_subheading"><ly-as-20315772>Keychain + Charms</ly-as-20315772></h2>
+                  <div class="bundle_image_option">
+                  <div class="bundle_collection_image">
+                   <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_5.png?v=1626017344" alt="Charm + Keychain (Gold)"/>
+                  </div>
+                    <div class="collection_options">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-1-gold" name="charm-gold" value="1-charm-keychain-gold">
+                    <label for="charm-1-gold"><ly-as-20315790>Keychain + 1 charm (€23)</ly-as-20315790></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-2-gold" name="charm-gold" value="3-charms-keychain-gold">
+                    <label for="charm-2-gold"><ly-as-20315791>Keychain + 3 charms (€39)</ly-as-20315791></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper bundle_best">
+                    <input type="radio" id="charm-3-gold" name="charm-gold" value="10-charms-keychain-gold">
+                    <label for="charm-3-gold"><ly-as-20315792>Keychain + 10 charms (€59) -</ly-as-20315792> <span class="best__seller"><ly-as-20315776>Bestseller</ly-as-20315776></span></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-4-gold" name="charm-gold" value="25-charms-keychain-gold">
+                    <label for="charm-4-gold"><ly-as-20315793>Keychain + 25 charms (€89)</ly-as-20315793></label>
+                    <div class="check"></div>
+                  </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="collection_type">
+                  <h2 class="bundle_subheading"><ly-as-20315778>Charms only</ly-as-20315778></h2>
+                  <div class="bundle_image_option">
+                  <div class="bundle_collection_image">
+                    <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_carm_only.jpg?v=1626982517" alt="Charms + Keychain">
+                  </div>
+                    <div class="collection_options">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-5-gold" name="charm-gold" value="single-charm-gold">
+                    <label for="charm-5-gold"><ly-as-20315794>1 charm (€7)</ly-as-20315794></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-6-gold" name="charm-gold" value="5-charms-gold">
+                    <label for="charm-6-gold"><ly-as-20315795>5 charms (€29)</ly-as-20315795></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper bundle_best">
+                    <input type="radio" id="charm-7-gold" name="charm-gold" value="20-charms-gold">
+                    <label for="charm-7-gold"><ly-as-20315796>20 charms (€79) -</ly-as-20315796> <span class="best__seller"><ly-as-20315776>Bestseller</ly-as-20315776></span></label>
+                    <div class="check"></div>
+                  </div>
+                  <div class="radio_wrapper">
+                    <input type="radio" id="charm-8-gold" name="charm-gold" value="40-charms-gold">
+                    <label for="charm-8-gold"><ly-as-20315797>40 charms (€119)</ly-as-20315797></label>
+                    <div class="check"></div>
+                  </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bundle_option keychain keychain_gold">
+              <h2 class="text-center bundle_heading"><ly-as-20315798>Keychain color (Gold Collection)</ly-as-20315798></h2>
+              <div class="keychain_wrapper">
+              {% if section.settings.keychain_gold_nude %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-nude-gold" name="keychain-gold" value="keychain-nude-gold-3">
+                    <label for="keychain-nude-gold">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_1.png?v=1626015316" alt="Nude keychain"/>   
+                      <span><ly-as-20315784>Nude</ly-as-20315784></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_gold_grey %}
+                 <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-grey-gold" name="keychain-gold" value="keychain-grey-gold-2">
+                    <label for="keychain-grey-gold">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_5.png?v=1626017344" alt="Grey keychain"/>   
+                      <span><ly-as-20315785>Grey</ly-as-20315785></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_gold_black %}
+                 <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-black-gold" name="keychain-gold" value="keychain-black-gold-1">
+                    <label for="keychain-black-gold">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_4.png?v=1626017344" alt="Black keychain"/>   
+                      <span><ly-as-20315786>Black</ly-as-20315786></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_gold_brown %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-brown-gold" name="keychain-gold" value="keychain-brown-gold-4">
+                    <label for="keychain-brown-gold">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_3.png?v=1626017344" alt="Brown keychain"/>   
+                      <span><ly-as-20315787>Brown</ly-as-20315787></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if section.settings.keychain_gold_red %}
+                <div class="keychain_item">
+                  <div class="radio_wrapper">
+                    <input type="radio" id="keychain-red-gold" name="keychain-gold" value="keychain-red-gold-5">
+                    <label for="keychain-red-gold">
+                      <img src="https://cdn.shopify.com/s/files/1/1514/8202/files/gold_2.png?v=1626017344" alt="Red keychain"/>   
+                      <span><ly-as-20315788>Red</ly-as-20315788></span>
+                    </label>
+                    <div class="check"></div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="buttons">
+          <div class='button' id='prev'><ly-as-20315799>Prev</ly-as-20315799></div>
+          <div class='button' id='next'><ly-as-20315800>Next</ly-as-20315800></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ {% comment %}ly_asset_replace_for_['bundle.css' | asset_url | stylesheet_tag ]_begin{% endcomment %}{% assign ly_asset = 'bundle.css' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  | stylesheet_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+
+ {% comment %}ly_asset_replace_for_['bundle.js' | asset_url | script_tag ]_begin{% endcomment %}{% assign ly_asset = 'bundle.js' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  | script_tag }}{% comment %}ly_asset_replace_end{% endcomment %}
+
+{% schema %}
+  {
+    "name": "Charm Bundle",
+    "settings": [
+	  {
+        "type": "header",
+        "content": "Silver Keychain",
+        "info": "Please enable at least one keychain"
+      },
+      {
+        "type": "checkbox",
+        "id": "keychain_silver_nude",
+        "label": "Enable Nude Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_silver_grey",
+        "label": "Enable Grey Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_silver_black",
+        "label": "Enable Black Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_silver_brown",
+        "label": "Enable Brown Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_silver_red",
+        "label": "Enable Red Keychain",
+		"default":true
+      },
+	  {
+        "type": "header",
+        "content": "Gold Keychain",
+        "info": "Please enable at least one keychain"
+      },
+      {
+        "type": "checkbox",
+        "id": "keychain_gold_nude",
+        "label": "Enable Nude Keychain",
+		"default":false
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_gold_grey",
+        "label": "Enable Grey Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_gold_black",
+        "label": "Enable Black Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_gold_brown",
+        "label": "Enable Brown Keychain",
+		"default":true
+      },
+	  {
+        "type": "checkbox",
+        "id": "keychain_gold_red",
+        "label": "Enable Red Keychain",
+		"default":true
+      }
+    ]
+  }
+{% endschema %}

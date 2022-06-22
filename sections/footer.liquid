@@ -1,0 +1,260 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<footer data-section-id="{{ section.id }}" id="footer">
+  <div id="footer-wrapper">
+    <div id="footer" class="row">
+    {% case section.blocks.size %}
+      {% when 0 %}
+      {% when 1 %}
+        {% assign column_width = 'desktop-12 tablet-6 mobile-3' %}
+      {% when 2 %}
+        {% assign column_width = 'desktop-6 tablet-3 mobile-3' %}
+      {% when 3 %}
+        {% assign column_width = 'desktop-4 tablet-3 mobile-3' %}
+      {% when 4 %}
+        {% assign column_width = 'desktop-3 tablet-3 mobile-3' %}
+    {% endcase %}
+
+      {% for block in section.blocks %}
+      {% case block.type %}
+      {% when 'menu' %}
+      <div class="{{ column_width }} footer-menu">
+        <label for="menu-item-{{ forloop.index }}" class="togglecontent"><h4>{{ block.settings.title }}</h4></label>
+        <input type="checkbox" id="menu-item-{{ forloop.index }}">
+        <div class="footer-block-content">
+          <ul {{ block.shopify_attributes }}>
+            {% for link in linklists[block.settings.footer_nav].links %}
+              <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% when 'newsletter' %}
+      <div class="{{ column_width }} footer-menu">
+        <label for="menu-item-{{ forloop.index }}" class="togglecontent"><h4>{{ block.settings.title }}</h4></label>
+        <input type="checkbox" id="menu-item-{{ forloop.index }}">
+        <div id="footer_signup" class="footer-block-content">
+          {{ block.settings.mailing_subheading }}
+          <p>{{ settings.footer_signup_text | escape }}</p>
+            {% form 'customer' %}
+            {{ form.errors | default_errors }}
+            {% if form.posted_successfully? %}
+            <p class="success">{% comment %}ly_i18n_replace_for_[ 'password.general.thanks' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'password.general.thanks' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315700' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+            {% else %}
+            <input type="hidden" name="contact[tags]" value="prospect, password page">
+            <input type="email" name="contact[email]" id="footer-EMAIL" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_email' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_email' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315701' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+            <input type="submit" id="footer-subscribe" value="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.submit' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.submit' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20315702' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+            {% endif %}
+            {% endform %}
+        </div>
+      </div>
+      {% when 'text' %}
+      <div class="{{ column_width }} footer-menu">
+        <label for="menu-item-{{ forloop.index }}" class="togglecontent"><h4>{{ block.settings.title }}</h4></label>
+        <input type="checkbox" id="menu-item-{{ forloop.index }}">
+        <div class="rte footer-block-content">{{ block.settings.footer_text }}</div>
+      </div>
+      {% endcase %}
+
+      <style>
+        input#menu-item-{{ forloop.index }} {
+          display: none;
+          position: relative;
+        }
+        @media screen and (max-width: 740px) {
+          .footer-block-content {
+            display: none;
+          }
+          #menu-item-{{ forloop.index }}:checked ~ .footer-block-content {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      </style>      
+
+      
+      {% endfor %}
+
+      <div class="clear"></div>
+      <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
+        {% if settings.facebook_url != blank %}
+          <li>
+            <a href="{{ settings.facebook_url }}" target="_blank">
+              <i class="fab fa-facebook-f la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.instagram-id != blank %}
+          <li>
+            <a href="//instagram.com/{{ settings.instagram-id }}" target="_blank">
+              <i class="la la-instagram la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.twittername != blank %}
+          <li>
+            <a href="{{ settings.twittername }}" target="_blank">
+              <i class="la la-twitter la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.pinterest_url != blank %}
+          <li>
+            <a href="{{ settings.pinterest_url }}" target="_blank">
+              <i class="la la-pinterest la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.tumblr_url != blank %}
+          <li>
+            <a href="{{ settings.tumblr_url }}" target="_blank">
+              <i class="la la-tumblr la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.youtube_url != blank %}
+          <li>
+            <a href="{{ settings.youtube_url }}" target="_blank">
+              <i class="la la-youtube la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.googleplus_url != blank %}
+          <li>
+            <a href="{{ settings.googleplus_url }}" target="_blank">
+              <i class="la la-google-plus la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.snapchat-id != blank %}
+          <li>
+            <a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank">
+              <i class="fab fa-snapchat-ghost la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.weibo-id != blank %}
+          <li>
+            <a href="//weibo.com/{{ settings.weibo-id }}" target="_blank">
+              <i class="la la-weibo la-2x" aria-hidden="true"></i>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+      <div class="clear"></div>
+      <div class="credit desktop-12 tablet-6 mobile-3">
+
+        <div id="payment">
+          {% if section.settings.show_credit_cards %}
+            {% for type in shop.enabled_payment_types %}
+              {{ type | payment_type_svg_tag: class:'payment-icon' }}
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <p>
+          <small><a href="{{ routes.root_url }}">© {{ 'now' | date: "%Y" }} {{ langify_shop_name }}</a> • {{ powered_by_link }}</small>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  #footer-wrapper {
+    text-align: {{ section.settings.footer_text_align }};
+  }
+</style>
+
+
+{% schema %}
+{
+    "name": "Footer",
+	"max_blocks": 4,
+    "settings": [
+     {
+        "type": "select",
+        "id": "footer_text_align",
+        "label": "Footer text align",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_credit_cards",
+        "label": "Show credit card icons",
+        "default": true,
+        "info": "The icons that show are determined by your store's payment settings."
+      }
+    ],
+   "blocks":[
+      {
+         "type":"menu",
+         "name":"Menu",
+         "settings":[
+            {
+               "type": "link_list",
+               "id": "footer_nav",
+               "label": "Sidebar menu",
+               "info": "This menu won't show dropdown items"
+            },
+           {
+            "type": "text",
+            "id": "title",
+            "label": "Menu title",
+            "default": "Explore"
+           }
+         ]
+      },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings":[
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Text title",
+          "default": "About"
+        },
+      {
+          "id": "footer_text",
+          "type": "richtext",
+          "label": "Text",
+          "default": "<p>Adding text to your footer helps introduce your business to new customers.</p>"
+       }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter signup",
+      "limit": 1,
+	    "settings":[
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Mailing list section title",
+          "default": "connect"
+        },
+        {
+         "type": "richtext",
+         "id": "mailing_subheading",
+         "label": "Mailing list subheading",
+         "default": "<p>Join our mailing list for updates</p>"
+        }
+	    ]
+	  }
+   ]
+  }
+{% endschema %}

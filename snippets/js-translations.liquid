@@ -1,0 +1,48 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<script>
+  var translated = [];
+
+  var getTranslationFor = function(key) {
+    {% assign language = 'ly84316' %}{% if request.host == 'travellercharms.de' %}{% assign language = 'ly84317' %}{% endif %}
+    {% for custom in shop.metafields.custom %}{% assign src = custom | last %}{% assign key = custom | first %}{% assign key = key | split: "ly" | last %}{% assign translation_namespace = language | append: "cu" %}{% assign translation_key = "id" | append: key %}{% if shop.metafields[translation_namespace][translation_key] %}{% assign translation = shop.metafields[translation_namespace][translation_key] %}{% assign src = src | replace: '"', 'ly_dq' %}{% assign src = src | replace: "'", 'ly_sq' %}{% assign src = '#ly_cu' | append: src %}{% assign translation = translation | replace: '"', 'ly_dq' %}{% assign translation = translation | replace: "'", 'ly_sq' %}if(key.replace('"', 'ly_dq').replace("'", 'ly_sq').trim() == '{{ src }}') { return '{{ translation }}';}{% endif %}{% endfor %}return key;
+  };
+
+  var translateHtml = function(id, replace) {
+  	var element = $(id);
+    var content = element.html();
+    if(content) {
+      var translation = getTranslationFor(content);
+      if(content != translation) {
+        element.html(translation);
+      }
+    }
+  }
+
+  var translatePlaceholder = function(id) {
+  	var element = $(id);
+    var content = element.attr('placeholder');
+    if(content) {
+      var translation = getTranslationFor(content);
+      if(content != translation) {
+        element.attr('placeholder', translation);
+      }
+    }
+  }
+
+  var translateValue = function(id) {
+  	var element = $(id);
+    var content = element.val();
+    if(content) {
+      var translation = getTranslationFor(content);
+      if(content != translation) {
+        element.val(translation);
+      }
+    }
+  }
+  
+  $(function() {
+    $('body').bind('DOMSubtreeModified', function() {
+      translateValue('input#AddToCart.add');
+    });
+  });
+</script>

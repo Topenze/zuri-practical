@@ -1,0 +1,25 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+{% assign bb_price = item.price %}
+{% assign bb_line_price = item.line_price %}
+{% assign bb_final_line_price = item.final_line_price %}
+{% assign bb_final_price = item.final_price %}
+{% assign bb_original_line_price = item.original_line_price %}
+{% assign bb_original_price = item.original_price %}
+
+{% for property in item.properties %}
+    {% if property.first == '_bundle_price' %}
+        {% assign bb_price = property.last %}
+        {% assign bb_final_price = bb_price %}
+        {% assign bb_line_price = bb_price | times: item.quantity %}
+        {% assign bb_final_line_price = bb_line_price %}
+        {% assign bb_original_price = bb_price %}
+        {% assign bb_original_line_price = bb_line_price %}
+    {% endif %}
+{% endfor %}
+
+{% for property in item.properties %}
+    {% if property.first == '_original_bundle_price' %}
+        {% assign bb_original_price = property.last %}
+        {% assign bb_original_line_price = bb_original_price | times: item.quantity %}
+    {% endif %}
+{% endfor %}

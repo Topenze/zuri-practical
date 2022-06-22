@@ -1,0 +1,126 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% paginate collections by 30 %}
+
+
+
+<div class="section-title">
+  <h1 class="desktop-12 mobile-3">{% comment %}ly_i18n_replace_for_[ 'collections.general.all_collections' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.all_collections' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316127' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h1>
+</div>
+
+{% if settings.show_collection_sidebar %}
+
+  <a class="show mobile-3" href="#">
+    <img src="{% comment %}ly_asset_replace_for_[ 'jquery.fs.shifter-icon.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'jquery.fs.shifter-icon.png' %}{% capture ly_translation %}{% render 'ly-asset' with ly_asset render:true %}{% endcapture %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}">
+  </a>
+
+  <div class="desktop-2 tablet-6 mobile-3" id="aside">
+    <div id="sidebar">
+      {% if settings.smartcollection %}
+        <ul>
+          {% for link in linklists[collection.handle].links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if settings.collection_links_1 %}
+        <ul>
+          <label>{% comment %}ly_code_replace_for_[ linklists[settings.collection_side_1].title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with linklists[settings.collection_side_1] render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</label>
+          {% for link in linklists[settings.collection_side_1].links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+
+        {% if settings.collection_side_1 == '' %}
+          <ul>
+            {% for collection in collections %}
+              <li>{% comment %}ly_code_replace_for_[ collection.title | link_to: collection.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation | link_to: collection.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+      {% endif %}
+
+
+      {% if settings.collection_links_2 %}
+        <ul>
+          <label>{% comment %}ly_code_replace_for_[ linklists[settings.collection_side_2].title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with linklists[settings.collection_side_2] render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</label>
+          {% for link in linklists[settings.collection_side_2].links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if settings.collection_links_3 %}
+        <ul>
+          <label>{% comment %}ly_code_replace_for_[ linklists[settings.collection_side_3].title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with linklists[settings.collection_side_3] render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</label>
+          {% for link in linklists[settings.collection_side_3].links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if settings.collection_links_4 %}
+        <ul>
+          <label>{% comment %}ly_code_replace_for_[ linklists[settings.collection_side_4].title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with linklists[settings.collection_side_4] render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</label>
+          {% for link in linklists[settings.collection_side_4].links %}
+            <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+    </div>
+
+    <script>
+
+      if($(window).width() > 980){
+
+        $('#sidebar').stickySidebar({
+
+          sidebarTopMargin: 100,
+          footerThreshold: 100
+
+        });
+      };
+    </script>
+
+  </div>
+
+
+{% endif %}
+
+<div class="{% if settings.show_collection_sidebar %}desktop-10{% else %}desktop-12{% endif %} tablet-6 mobile-3" id="bside">
+
+  {% if collections.size > 0 %}
+    <div id="product-loop">
+      {% for collection in collections %}
+        <div class="product {% if settings.products_per_row  == '3' %}desktop-4{% cycle ' first', '', ' last' %}{% elsif settings.products_per_row == '4' %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} mobile-half" data-alpha="{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">
+          <div class="collection-image ci">
+            <a href="{{ collection.url }}" title="{{ collection_title }}">
+              {% if collection.image %}
+                {% include 'basic-responsive-image'| type: collection.image.src %}
+                <noscript>
+                  <img src="{{ collection.image.src | img_url: '800x' }}" alt="{{ collection.image.alt }}">
+                </noscript>
+              {% else %}
+                {% include 'basic-responsive-image'| type: collection.products.first.featured_image %}
+                <noscript>
+                  <img src="{{ collection.products.first.featured_image | img_url: '800x' }}" alt="{{ collection.image.alt }}">
+                </noscript>
+              {% endif %}
+            </a>
+          </div>
+          <div class="product-details">
+            <h3><a href="{{ collection.url }}" title="{{ collection_title }}">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></h3>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% else %}
+    <p>{% comment %}ly_i18n_replace_for_[ 'collections.general.no_matches' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.no_matches' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316128' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+  {% endif %}
+
+  {% include 'pagination' %}
+
+  {% endpaginate %}
+</div>

@@ -1,0 +1,25 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% for i in (1..post_limit) %}
+  {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+  {%- assign placeholder = 'lifestyle-' | append: current -%}
+  <div class="single-article desktop-6 tablet-3 mobile-3">
+
+    <h3>
+      <a href="#">Blog post {{ forloop.index }}</a>
+    </h3>
+    <div class="article-content">
+      {%- assign image_size = '800x' -%}
+      <div class="article-image onboard">
+        <a href="#" title="{{ article_title }}">
+          {{ placeholder | placeholder_svg_tag }}
+        </a>
+      </div>
+    </div>
+    <div class="article-body">
+      <span class="posted">{{ 'now' | date: "%a, %b %d, %y" }}</span>
+      <div class="clear"></div>
+      <div class="rte">
+        Blog post {{ forloop.index }} sample text
+      </div>
+    </div>
+  </div>
+{% endfor %}

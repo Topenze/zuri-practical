@@ -1,0 +1,62 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<section class="homepage-featured-video-{{ section.id }} homepage-section"
+data-section-id="{{ section.id }}"
+data-section-type="video-section"
+data-aos="{{ settings.scroll_animation }}">
+  {% if section.settings.video_header != blank %}
+    <div class="section-title row">
+      <h2>{{ section.settings.video_header | escape }}</h2>
+    </div>
+  {% endif %}
+  <div class="videoWrapper">
+    {% if section.settings.video_url == blank %}
+      <iframe src="//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+    {% else %}
+      {% if section.settings.video_url.type == "youtube" %}
+        <iframe src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      {% endif %}
+      {% if section.settings.video_url.type == "vimeo" %}
+        <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+<style>
+  section.homepage-featured-video-{{ section.id }} h2 {
+    color: {{ section.settings.heading_color }} !important;
+    {% if settings.section_titles != 'text_only' %}
+    border-color: {{ section.settings.heading_color }} !important;
+    {% endif %}
+  }
+</style>
+{% schema %}
+  {
+    "name": "Featured video",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "video_header",
+        "label": "Heading",
+        "default": "Featured Video"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000000"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "YouTube or Vimeo link",
+        "accept": ["youtube", "vimeo"]
+      }
+	],
+  "presets": [
+	{
+      "name": "Video",
+      "category": "video"
+    }
+	]
+  }
+{% endschema %}

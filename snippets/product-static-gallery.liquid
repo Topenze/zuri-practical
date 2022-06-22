@@ -1,0 +1,215 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<div class="row">
+  {% assign product_image_box_ratio_max = 0 %}
+  {% for image in product.images %}
+    {% assign image_box_ratio = image.height | append: ".0" | times: 1 | divided_by: image.width | times: 100 %}
+    {% if image_box_ratio > product_image_box_ratio_max %}
+      {% assign product_image_box_ratio_max = image_box_ratio %}
+    {% endif %}
+  {% endfor %}
+  {% assign product_image_box_ratio_max = product_image_box_ratio_max | append: "%" %}
+  {% assign featured_image = current_variant.image | default: product.featured_image %}
+
+  {% assign show_thumbs = false %}
+
+  {% if product.images.size > 1 and section.settings.thumbs_to_show > 0 and section.settings.thumbnails != 'below' %}
+    {% assign show_thumbs = true %}
+  {% endif %}
+
+  {% capture thumbnails %}
+    {% if section.settings.thumbnails != 'below' %}
+    	{% assign grid_width = 'desktop-3 tablet-1' %}
+    {% else %}
+    	{% assign grid_width = 'desktop-12 tablet-6' %}
+    {% endif %}
+
+    <div id="thumbnail-gallery" class="product-thumbnails {{ grid_width }} mobile-hide">
+      <div class="thumbnail-slider">
+        {% for image in product.images %}
+          <div class="product-thumbnail {% if image.id == featured_image.id %}selected{% endif %}" data-image-id="{{ image.id }}">
+            <img src="{{ image | product_img_url: '300x' }}" alt="{{ image.alt | escape }}" />
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endcapture %}
+
+  {% if show_thumbs %}
+    {% comment %}{% assign grid_width = 'desktop-9 tablet-5' %} {% endcomment %}
+ 	 {% assign grid_width = 'desktop-12 tablet-6' %}
+  {% else %}
+    {% assign grid_width = 'desktop-12 tablet-6' %}
+  {% endif %}
+
+  {% if section.settings.thumbs_to_show > 0 %}
+    {% assign thumbs_shown = 'has_thumbs' %}
+  {% else %}
+    {% assign thumbs_shown = 'no_thumbs' %}
+  {% endif %}
+
+  {% capture main_images %}
+    <div class="product-main-images mobile-3 {{ grid_width }} {{ thumbs_shown }} desktop-images" id="pro_desk_sticky">
+      
+      
+      
+      <div class="product-image-container" style="padding-bottom: {{ product_image_box_ratio_max }};" >
+        <div id="sticky-anchor"></div>
+              <div class="filter-wr stick" id="sticky">  
+        {% for image in product.images %}
+          {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+         
+        <a class="product-main-image {% if image.id == featured_image.id %}selected{% endif %}" {% if section.settings.click_to_enlarge and template != 'product.quick' %}data-fancybox="images"{% endif %} href="{{ image | img_url: '2400x' }}" data-thumb="{{ image | img_url: '150x' }}" data-image-id="{{ image.id }}">
+            
+           
+                    <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
+                      data-src="{{ img_url }}"
+                      data-sizes="auto"
+                      data-zoom-src="{{ img_url }}"
+
+                      alt="{{ image.alt | escape }}">
+				
+                    <noscript>
+                      <img id="{{ product.id }}" src="{{ image | img_url: '800x' }}" alt='{{ image.alt | escape }}'/>
+                    </noscript>
+                
+          </a>
+              
+        {% endfor %}
+        </div>
+      </div>
+      
+     
+      
+      
+    </div>
+  
+<!--   /*mobile product image code*/ -->
+  
+  <div class="product-main-images mobile-3 {{ grid_width }} {{ thumbs_shown }} desktop-images" id="mobile_pro_sticky">
+      
+      
+     <div class="" style=""  >
+        {% for image in product.images %}
+          {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+        <a class="product-main-image {% if image.id == featured_image.id %}selected{% endif %}" data-fancybox="images" href="{{ image | img_url: '2400x' }}" data-thumb="{{ image | img_url: '150x' }}" data-image-id="{{ image.id }}">
+          
+<!--        <a class="product-main-image {% if image.id == featured_image.id %}selected{% endif %}" {% if section.settings.click_to_enlarge and template != 'product.quick' %}data-fancybox="images"{% endif %} href="{{ image | img_url: '2400x' }}" data-thumb="{{ image | img_url: '150x' }}" data-image-id="{{ image.id }}"> -->
+            
+            <div id="sticky-anchor"></div>
+              <div class="filter-wr stick" id="sticky">
+                    <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
+                      data-src="{{ img_url }}"
+                      data-sizes="auto"
+                      data-zoom-src="{{ img_url }}"
+
+                      alt="{{ image.alt | escape }}">
+
+                    <noscript>
+                      <img id="{{ product.id }}" src="{{ image | img_url: '800x' }}" alt='{{ image.alt | escape }}'/>
+                    </noscript>
+                </div>
+          </a>
+        {% endfor %}
+      
+      </div>
+      
+     
+      
+      
+    </div>
+  
+  {% endcapture %}
+
+  {% if template != 'product.quick' %}
+    {% if section.settings.thumbnails == 'left' and section.settings.thumbs_to_show >= 1 and product.images.size > 1 %}
+      {{ thumbnails }}
+    {% endif %}
+
+    {{ main_images }}
+
+    {% if section.settings.thumbnails == 'right' or section.settings.thumbnails == 'below' and section.settings.thumbs_to_show >= 1 and product.images.size > 1%}
+      {{ thumbnails }}
+    {% endif %}
+  {% endif %}
+
+  {% if template == 'product.quick' %}
+    <div class="product-main-images desktop-12 tablet-6 quick-view-images">
+      <div class="product-image-container" style="padding-bottom: {{ product_image_box_ratio_max }};">
+        {% for image in product.images %}
+          {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+          <div class="product-main-image {% if image.id == featured_image.id %}selected{% endif %}" data-thumb="{{ image | img_url: '150x' }}" data-image-id="{{ image.id }}">
+            <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
+              data-src="{{ img_url }}"
+              data-sizes="auto"
+              data-zoom-src="{{ img_url }}"
+              alt="{{ image.alt | escape }}">
+
+            <noscript>
+              <img id="{{ product.id }}" src="{{ image | img_url: '800x' }}" alt='{{ image.alt | escape }}'/>
+            </noscript>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  
+    <div id="thumbnail-gallery" class="product-thumbnails desktop-12 tablet-6">
+      {% for image in product.images limit: 5 %}
+        <div class="product-thumbnail {% if image.id == featured_image.id %}selected{% endif %}" data-image-id="{{ image.id }}">
+          <img src="{{ image | product_img_url: '300x' }}" alt="{{ image.alt | escape }}" />
+        </div>
+      {% endfor %}
+      {% if product.images.size > 5 %}
+        <div class="thumbnails all">
+          <a href="{{ product.url }}"><ly-as-20316228>View All</ly-as-20316228></a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  <style media="screen">
+    .thumbnail-slider {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease;
+      -webkit-transition: opacity 1s ease;
+    }
+    .thumbnail-slider.slick-initialized {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</div>
+
+  
+  <script>
+   
+          function sticky_relocate() {
+              
+              var window_size= $(window).width();
+              var window_top = $(window).scrollTop();
+              var footer_top = $("#footernew").offset().top;
+              var div_top = $('#sticky-anchor').offset().top;
+              var div_height = $("#stickynew").height();
+            
+           // if(window_size > 768) 
+           // {
+                  if (window_top + div_height > footer_top)
+                      $('#sticky').removeClass('stick');    
+                  else if (window_top > div_top) {
+                      $('#sticky').addClass('stick');
+                  } else {
+                      $('#sticky').removeClass('stick');
+                  }
+              
+           // } 
+          }
+
+          $(function () {
+              $(window).scroll(sticky_relocate);
+              sticky_relocate();
+          });
+</script>
+ 

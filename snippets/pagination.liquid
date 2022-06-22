@@ -1,0 +1,24 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}  <div id="pagination" class="desktop-12 mobile-3 span-12">
+    <span class="count">
+      {% if template != 'list-collections' %}
+      {% comment %}ly_i18n_replace_for_[ 'general.pagination.showing_items' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.pagination.showing_items' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316178' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}{% endif %} {{ paginate.current_offset | plus: 1 }}-{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ paginate.items }}{% endif %} {% comment %}ly_i18n_replace_for_[ 'general.pagination.of' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.pagination.of' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316179' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ paginate.items }}.
+    </span>
+    <div class="clear"></div>
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="paginate_prev"><i class="la la-angle-left" aria-hidden="true"></i></a>
+    {%- endif -%}
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        {% comment %}ly_code_replace_for_[ part.title | link_to: part.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with part render:true %}{% endcapture %}{{ ly_translation | link_to: part.url }}{% comment %}ly_code_replace_end{% endcomment %}
+      {%- else -%}
+        {%- if part.title == '<i class="la la-ellipsis-h" aria-hidden="true"></i>' -%}
+          {% comment %}ly_code_replace_for_[ part.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with part render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+        {%- else -%}
+          <span class="current">{% comment %}ly_code_replace_for_[ part.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with part render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="paginate_next"><i class="la la-angle-right" aria-hidden="true"></i></a>
+    {%- endif -%}
+  </div>

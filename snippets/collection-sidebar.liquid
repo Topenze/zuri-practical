@@ -1,0 +1,84 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div id="sidebar" class="sidebar{% if section.settings.is_sticky %} is_sticky{% endif %}">
+  <div class="sidebar__inner">
+
+        {% if collection.image %}
+          {% include 'basic-responsive-image' | type: collection.image %}
+          <noscript>
+            <img src="{{ collection.image | img_url: '300x' }}" alt="{{ collection.image.alt }}">
+          </noscript>
+        {% endif %}
+
+          {% comment %}
+          Include block settings for collection template to add sidebar menus
+          {% endcomment %}
+
+        {% for block in section.blocks %}
+          {% include 'filters' %}
+          {% if block.type == 'vendor_list' %}
+            {% if collection.handle == "all" %}
+              <div class="filter" {{ block.shopify_attributes }}>
+                <button class="filter-menu">
+                  <h4>{{ block.settings.shop_by_designer_title }}</h4>
+                </button>
+                <ul class="filter-list">
+                  {% for product_vendor in shop.vendors %}
+                  <li>{{ product_vendor | link_to_vendor  }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              <div class="filter" {{ block.shopify_attributes }}>
+                <button class="filter-menu">
+                  <h4>{{ block.settings.shop_by_designer_title }}</h4>
+                </button>
+                <ul class="filter-list">
+                  {% for product_vendor in collection.all_vendors %}
+                  <li class="{{ product_vendor | handelize }}">{{ product_vendor | link_to_vendor }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% elsif block.type == 'menu' %}
+            <div class="filter" {{ block.shopify_attributes }}>
+              <button class="filter-menu">
+                <h4>{{ block.settings.title }}</h4>
+              </button>
+              <ul class="filter-list sidebar-menu">
+                {% for link in linklists[block.settings.side_nav].links %}
+                {% if link.links != blank %}
+                <li class="extend has_sub_menu" aria-haspopup="true" aria-expanded="false"><a href="{{ link.url }}">{% comment %}ly_code_replace_for_[ link.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+                <ul class="extended-submenu">
+                  {% for sub_link in link.links %}
+                  <li><a href="{{ sub_link.url }}">{% comment %}ly_code_replace_for_[ sub_link.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with sub_link render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+                  {% endfor %}
+                </ul>
+                {% else %}
+                <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with link render:true %}{% endcapture %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% elsif block.type == 'image' %}
+            {%- assign image_size = '450x' -%}
+            <div class="image_container" {% if forloop.index == 1 %}style="margin-top:0;"{% endif %}>
+              <a href="{{ block.settings.link }}">
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | img_url: image_size }}" alt="{{ block.settings.image.alt }}">
+                {% else %}
+                  {{ 'collection-3' | placeholder_svg_tag }}
+                {% endif %}
+              </a>
+            </div>
+          {% elsif block.type == 'text_note' %}
+            <div class="textnote_container">
+              {% if block.settings.textbox_heading != blank %}<h4>{{ block.settings.textbox_heading }}</h4>{% endif %}
+              {% if block.settings.textbox_subheading != blank %}
+                <div class="subheading{% if block.settings.subheading_align == 'center' %} center{% endif %}">
+                  {{ block.settings.textbox_subheading }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+    </div>
+</div>

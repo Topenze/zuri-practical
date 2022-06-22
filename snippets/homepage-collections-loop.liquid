@@ -1,0 +1,29 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<div class="collection-block">
+  <div class="collection-carousel">
+    {% if block.settings.collection == blank %}
+      {% for i in (1..6) %}
+        {% capture current %}{{ forloop.index }}{% endcapture %}
+        {%- assign placeholder = 'collection-' | append: current -%}
+        <div class="lazyOwl product" data-alpha="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-price="{{ bold_price }}">
+          <div class="collection-image ci onboard">
+            <a href="#">
+              {{ placeholder | placeholder_svg_tag }}
+            </a>
+          </div>
+          <div class="product-details">
+            <h3><a href="#">Sample product {{ forloop.index }}</a></h3>
+          </div>
+        </div>
+    <div class="loox-rating" data-id="{{ product.id }}" data-rating="{% comment %}ly_code_replace_for_[ product.metafields.loox.avg_rating ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'avg_rating' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.avg_rating  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-raters="{% comment %}ly_code_replace_for_[ product.metafields.loox.num_reviews ]_begin{% endcomment %}{% if request.host %}{% assign host = request.host %}{% assign domains = shop.metafields.language_domains %}{% for domain in domains %}{% assign key = domain | first %}{% assign value = domain | last | split: ',' %}{% if value contains host %}{% assign language = key %}{% endif %}{% endfor %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% else %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'num_reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.num_reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"></div>
+      {% endfor %}
+    {% else %}
+      {% for product in collection.products %}
+{%- include 'bold-product' with product, hide_action: 'skip' -%}
+        <div class="lazyOwl product" data-alpha="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with product render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-price="{{ bold_price }}">
+          {% include 'product-listing' %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>

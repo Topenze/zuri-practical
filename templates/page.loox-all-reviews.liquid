@@ -1,0 +1,11 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% if shop.metafields.loox["global_stats"] %}
+{% assign looxstats = shop.metafields.loox["global_stats"] | split: "," %}
+<div itemscope itemtype="https://schema.org/Product">
+<meta itemprop="name" content="{{ langify_shop_name | escape }}"/>
+<div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+<meta itemprop="ratingValue" content="{{ looxstats[0] }}"/>
+<meta itemprop="ratingCount" content="{{ looxstats[1] }}"/>
+</div>
+</div>
+{% endif %}
+{% section 'page-template' %}

@@ -1,0 +1,18 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div class="collection-image ci">
+  <a href="{{ collection.url }}" title="{{ collection_title }}">
+    {% if collection.image %}
+      {% include "basic-responsive-image", type: collection.image %}
+      <noscript>
+        <img src="{{ collection.image | img_url: '1024x1024' }}" alt="{{ collection__image.alt | escape }}" class="collection__image">
+      </noscript>
+    {% else %}
+      {% include "basic-responsive-image", type: collection.products.first.featured_image %}
+      <noscript>
+        <img src="{{ collection.products.first.featured_image | img_url: '1024x1024' }}" alt="{{ collection.products.first.featured_image.alt | escape }}" class="collection__image">
+      </noscript>
+    {% endif %}
+  </a>
+</div>
+<div class="product-details">
+  <h3><a href="{{ collection.url }}" title="{{ collection_title }}">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with collection render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></h3>
+</div>

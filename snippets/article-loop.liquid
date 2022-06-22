@@ -1,0 +1,78 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% capture articleCycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+
+<div data-aos="{{ settings.scroll_animation }}" class="single-article {% if articleCycle == 'even' %}even{% elsif articleCycle == 'odd' %}odd{% endif %}{% if template contains 'article' %}odd{% endif %}">
+{% capture articleImage %}
+  <div class="article-image">
+    {% if article.image != blank %}
+      <a href="{{ article.url }}">
+        {% include "basic-responsive-image", type: article.image %}
+        <noscript>
+          <img src="{{ article.image | img_url: '1024x' }}" alt="{{ article.image.alt }}">
+        </noscript>
+      </a>
+    {% else %}
+      {% if article.content contains "<img" and ".jpg" %}
+        {% assign src = article.content | split: 'src="' | last %}
+        {% assign src = src | split: '.jpg' | first | append: '.jpg' %}
+        <img src="{{ src }}" width="100%" />
+      {% elsif article.content contains "<img" and ".png" %}
+        {% assign src = article.content | split: 'src="' | last %}
+        {% assign src = src | split: '.png' | first | append: '.png' %}
+        <img src="{{ src }}" width="100%" />
+      {% endif %}
+    {% endif %}
+  </div>
+  {% endcapture %}
+
+  {% if articleCycle == 'odd' %}
+  {{ articleImage }}
+  {% else %}
+  <div class="mobile-image">
+    {{ articleImage }}
+  </div>
+  {% endif %}
+
+  <div class="article-body" data-aos="{{ settings.scroll_animation }}" data-aos-delay="300" data-aos-duration="1000">
+    <h3>
+      <a href="{{ article.url }}">
+        {% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with article render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+      </a>
+    </h3>
+    <div class="clear"></div>
+    <div class="rte">
+      {% if article.excerpt != blank %}
+        {% comment %}ly_code_replace_for_[ article.excerpt ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-excerpt' with article render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+      {% else %}
+        {% comment %}ly_code_replace_for_[ article.content | strip_html | truncatewords: 30 ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with article render:true %}{% endcapture %}{{ ly_translation | strip_html | truncatewords: 30 }}{% comment %}ly_code_replace_end{% endcomment %} <a href="{{ article.url }}">{% comment %}ly_i18n_replace_for_[ 'blogs.article.read_more' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.read_more' | t }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316098' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+      {% endif %}
+    </div>
+    <div class="clear"></div>
+    <div class="post_meta">
+      {% assign published_at = article.published_at | date: "%b %d, %Y" %}
+        <span class="posted">
+          {% comment %}ly_i18n_replace_for_[ 'blogs.article.posted_on_date_html' | t: date: published_at ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.posted_on_date_html' | t: date: published_at }}{% endcapture %}{% capture ly_translation %}{% render 'ly-static-string' with '20316100' render:true %}{% endcapture %}{% if ly_translation != '' and ly_translation != nil  %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = published_at  %}{% assign ly_template = ly_template | replace: '[[date]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+        </span>
+        {% if section.settings.show_author %}
+        <span class="posted_by">
+          By {{ article.user.first_name }}
+        </span>
+      {% endif %}
+      {% if article.tags.size > 0 and section.settings.post_tags %}
+        <ul>
+          {% for tag in article.tags %}
+            <li class="tags">
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+                {{ tag }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if articleCycle == 'even' %}
+  {{ articleImage }}
+  {% endif %}
+
+</div>

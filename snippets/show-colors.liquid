@@ -1,0 +1,40 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% for option in product.options %}
+
+  {% assign option_handle = option | handle %}
+  {% assign option_index = forloop.index0 %}
+
+  {% assign is_color = false %}
+  {% capture downcased_option %}{{ option | downcase }}{% endcapture %}
+  {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+    <div class="col-swatch">
+      <ul data-option-index="{{ option_index }}" class="{{ option_handle }} options">
+      {% assign values = '' %}
+      {% for variant in product.variants %}
+{%- include 'bold-variant' with variant, hide_action: 'skip' -%}
+        {% assign value = variant.options[option_index] | remove: csp_flag_string %}
+        {% capture wrapped_value %},{{ value }},{% endcapture %}
+        {% unless values contains wrapped_value %}
+          {% assign css_color = value | split: ' ' | last | handle %}
+          {% assign image_url = value | handle | append: '.png' | file_url %}
+          {% assign variant_image_url = blank %}
+
+          {% if variant.image %}
+            {% assign variant_image_url =  variant.image | img_url: '1000x' %}
+          {% endif %}
+
+          <li data-option-title="{{ value | escape }}" data-href="{{ variant.featured_image | product_img_url: 'large' }}" class="color {{ value | handle }}">
+            <a href="{{ variant.url | within: collection }}">
+              {% if settings.color_swatch_options == 'variant-image' and variant_image_url != blank %}
+                <img class="variant-image" src="{{ variant_image_url }}" alt="{{ value }}">
+              {% else %}
+                  <span class="custom-image css-color" style="width: 25px; height: 25px; background-color: {{ css_color }}; background-image: url({{ image_url }});"></span>
+              {% endif %}
+            </a>
+          </li>
+          {% capture values %}{{ values }}{{ wrapped_value }}{% endcapture %}
+        {% endunless %}
+      {% endfor %}
+      </ul>
+    </div><!-- .swatch -->
+  {% endif %}
+{% endfor %}

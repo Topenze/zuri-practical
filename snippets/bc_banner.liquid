@@ -1,0 +1,124 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% assign data = shop.metafields.bc_cookie %}
+{% assign cookieData = data.bc_cookie_list %}
+
+{% if data.size > 0 and cookieData._bc_c_set.live == '1' %}
+
+    <script>
+        if (typeof BC_JSON_ObjectBypass === "undefined"){
+            var BC_JSON_ObjectBypass = {{ cookieData | json }};
+        }
+
+    </script>
+    <script>
+        const data_gdpr_legal_banner_content = {{ data.bc_cookie_banner_main | json }};
+    </script>
+
+    <div id="cookie-banner_flag"
+         style="position: fixed;top: 70vh;z-index: 1000000000;transform: rotate(-90deg);background-color: #6d6d6d;color: #fff;padding: 8px 12px;left: -60px;border-radius: 0 0 12px 12px;width: 150px;max-width: 150px;height: 35px;text-align: center; cursor: pointer"
+         hidden="hidden">{{ data.bc_cookie_banner_main.flag.text }}
+    </div>
+    <div id="banner-wrapper" hidden="hidden">
+        <style>{{ data['bc_cookie_banner_css'] }}</style>
+
+        <script>
+
+
+        </script>
+        <div class="overlay">
+            <div class="banner-body">
+                <div class="banner-body__content">
+                    <div class="banner-header">
+                        <div class="banner-logo">
+                            <img class="logo"
+                                 src="{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_settings.body.content.header.logo.settings.src ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_settings.body render:true %}{% endcapture %}{{ ly_translation.header.logo.settings.src }}{% comment %}ly_code_replace_end{% endcomment %}"
+                                 alt="{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_settings.body.content.header.logo.settings.alt ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_settings.body render:true %}{% endcapture %}{{ ly_translation.header.logo.settings.alt }}{% comment %}ly_code_replace_end{% endcomment %}">
+                        </div>
+                        <div class="banner-header__title">
+                            <h2>{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_header.title ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-title' with data.bc_cookie_banner_header render:true %}{% endcapture %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h2>
+                        </div>
+                    </div>
+                    <div class="banner-main">
+                        <div class="banner-main_header">
+                            <p>{{ data.bc_cookie_banner_main.primary }}</p>
+                            <p><p>{{ data.bc_cookie_banner_main.secondary }}</p>
+                        </div>
+                        <div class="banner-main_header list-type">
+                            <p>{{ data.bc_cookie_banner_main.essential_button }}</p>
+                            <p>{{ data.bc_cookie_banner_main.marketing_button }}</p>
+                        </div>
+                        <div class="banner-main_buttons">
+                            <p id="all_accept" class="btn-accept">
+                                <a class="btn-btn btn-btn-accept-all cursor" data-cookie-accept-all="">{{  data.bc_cookie_banner_main.buttons.accept }}</a>
+                            </p>
+                            <p id="essential_accept" class="btn-accept">
+                                <a class="btn-btn btn-btn-save cursor" data-cookie-save="">{{  data.bc_cookie_banner_main.buttons.save }}</a>
+                            </p>
+                            <!-- todo indivuell entscheiden -->
+                            <p class="btn-manage cursor">
+                                {{  data.bc_cookie_banner_main.buttons.edit }}</p>
+
+                            <p class="btn-accept btn-manage__save cursor" hidden>{{ data.bc_cookie_banner_main.buttons.save_close }}</p>
+                        </div>
+
+                    </div>
+
+                    <div class="tabs" hidden="hidden">
+
+                        <div class="cookie_tab__wrapper_header">
+                            <p id="countEssentials">
+                                <strong>{{  data.bc_cookie_banner_main.essential_button }}</strong>
+                                <strong class="counter"></strong>
+                            </p>
+                            <p>{{  data.bc_cookie_banner_main.essential }}</p>
+                            <details>
+                                <summary id="summary_essential" style="cursor: pointer;">{{  data.bc_cookie_banner_main.details }}</summary>
+                                <div class="cookie_tab__wrapper essential display"></div>
+                            </details>
+
+
+                        </div>
+
+                        <div class="cookie_tab__wrapper_header">
+                            <p id="countMarketing">
+                                <strong>{{  data.bc_cookie_banner_main.marketing_button }}</strong>
+                                <strong class="counter"></strong>
+                            </p>
+                            <p>{{  data.bc_cookie_banner_main.marketing }}</p>
+                            <div class="toggle">
+                                <label for="input_all_cookies">
+                                    <input name="all_cookies" id="input_all_cookies" type="checkbox"><span class="slider"></span>
+                                </label>
+                            </div>
+                            <p style="height: 1.2em;"></p>
+                            <details>
+                                <summary id="summary_marketing" style="cursor: pointer;">{{  data.bc_cookie_banner_main.details }}</summary>
+                                <div class="cookie_tab__wrapper marketing display"></div>
+                            </details>
+
+                        </div>
+
+                    </div>
+
+                    <div style="text-align: center; font-size: 0.7em; color: #7d7d7d;">
+                        <ly-as-20316103>GDPR legal Cookie by</ly-as-20316103> <a href="https://gdpr-legal-cookie.myshopify.com/" rel="nofollow" style="color: #7d7d7d;"><ly-as-20316104>beeclever</ly-as-20316104></a>
+                    </div>
+                    <div class="banner-footer">
+                        {% if data.bc_cookie_banner_footer.content.link_1.link.size > 0 %}
+                            <a href="{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_1.link ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_1.link }}{% comment %}ly_code_replace_end{% endcomment %}">{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_1.text ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_1.text }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+                        {% endif %}
+
+                        {% if data.bc_cookie_banner_footer.content.link_2.link.size > 0 %}
+                            <a href="{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_2.link ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_2.link }}{% comment %}ly_code_replace_end{% endcomment %}">{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_2.text ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_2.text }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+                        {% endif %}
+
+                        {% if data.bc_cookie_banner_footer.content.link_3.link.size > 0 %}
+                            <a href="{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_3.link ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_3.link }}{% comment %}ly_code_replace_end{% endcomment %}">{% comment %}ly_code_replace_for_[ data.bc_cookie_banner_footer.content.link_3.text ]_begin{% endcomment %}{% capture ly_translation %}{% render 'ly-content' with data.bc_cookie_banner_footer render:true %}{% endcapture %}{{ ly_translation.link_3.text }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endif %}

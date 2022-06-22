@@ -1,0 +1,21 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}
+<div id="logo" class="desktop-2 tablet-3 {{ logo_width }} {{ section.settings.logo_position }}">
+{% if section.settings.logo != blank %}
+{%- assign image_size = '400x' -%}
+<div class="first_logo">
+<a href="{{ langify_shop_url }}">
+  <img src="{{ section.settings.logo | img_url: image_size }}" itemprop="logo">
+</a>
+</div>
+  {% if section.settings.logo_alt != blank %}
+  {%- assign image_size = '400x' -%}
+  <div class="second_logo">
+  <a href="{{ langify_shop_url }}">
+    <img src="{{ section.settings.logo_alt | img_url: image_size }}" itemprop="logo">
+  </a>
+  </div>
+  {% endif %}
+{% else %}
+  <a href="{{ langify_shop_url }}">{{ langify_shop_name }}</a>
+{% endif %}
+</div>

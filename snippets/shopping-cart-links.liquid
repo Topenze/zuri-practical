@@ -1,0 +1,38 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}{% if settings.show_multiple_currencies %}
+  <li class="currsw">
+    {% include 'currencies-switcher' %}
+  </li>
+{% endif %}
+<li class="seeks">
+  <a id="search_trigger" href="#">
+    <i class="la la-search" aria-hidden="true"></i>
+  </a>
+</li>
+{% if shop.customer_accounts_enabled %}
+  {% if customer  %}
+    <li class="cust">
+      <a href="/account">
+        <i class="la la-user" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="cust">
+      <a href="/account/logout" class="logout-link">
+        <i class="la la-user-times" aria-hidden="true"></i>
+      </a>
+    </li>
+  {% else %}
+    <li class="cust">
+      <a href="/account/login">
+        <i class="la la-user" aria-hidden="true"></i>
+      </a>
+    </li>
+  {% endif %}
+{% endif %}
+<li>
+  <a href="/cart" {% if settings.ajax_cart_method == 'drawer' %}class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}>
+    <span class="cart-words"></span>
+   <i class="la la-shopping-cart" aria-hidden="true"></i>
+    <span class="CartCount">{{ cart.item_count }}</span>
+     <span class="CartCost"><span class="money">{%comment%}gc--[{%endcomment%}{%- capture geolizr_prepend_code -%}{%- render 'geolizr-currency', geolizr_price: cart.total_price -%}{% endcapture %}{%comment%}]--gc{%endcomment%}{{ cart.total_price | money | prepend: geolizr_prepend_code | append: "</span>"}}</span></span>
+  </a>
+</li>

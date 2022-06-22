@@ -1,0 +1,97 @@
+{% comment %}ly_global_begin{% endcomment %}{% capture ly-global-content %}{% render 'ly-global' render:true %}{% endcapture %}{% assign ly-global-content = ly-global-content | split: '#ly#' %}{% assign langify_title = ly-global-content[0] %}{% assign langify_description = ly-global-content[1] %}{% assign langify_shop_name = ly-global-content[2] %}{% assign langify_shop_description = ly-global-content[3] %}{% assign canonical_langify_url = ly-global-content[4] %}{% assign langify_shop_url = ly-global-content[5] %}{% assign langify_shop_domain = ly-global-content[6] %}{% comment %}ly_global_end{% endcomment %}<div class="pop-up-modal">
+  <div class="pop-up-content">
+    <div class="bundle__upsell">
+      <p class="product_notification"></p>
+      <span class="close-button">{% include 'close' %}</span>
+      <h2 class="text-center upsell__heading"><ly-as-20315690>Add Travel accessories to your bundle!</ly-as-20315690></h2>
+      <div class="bundle__products">
+        {% if product.handle contains 'silver' %}
+        {% assign collection = section.settings.silver_collection %}
+        {% elsif product.handle contains 'gold' %}
+        {% assign collection = section.settings.gold_collection %}
+        {% else %}
+        {% assign collection = section.settings.collection %}
+        {% endif %}
+        {% for product in collection.products %}
+        {%- include 'bold-product' with product, hide_action: 'skip' -%}
+        <div class="bundle__item">
+          {% include 'product-listing-upsell' %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.querySelector(".pop-up-modal");
+  const closeButton = document.querySelector(".close-button");
+  const cartToggle = document.querySelector('.site-header__cart-toggle');
+
+  function toggleModal() {
+    modal.classList.toggle("show-pop-up");
+  };
+   
+  function windowOnClick(event) {
+    if (event.target === modal) {
+      toggleModal();
+      cartToggle.click();
+    }
+  };
+
+  closeButton.addEventListener('click', function(){
+    toggleModal();
+    cartToggle.click();
+  });
+
+  window.addEventListener("click", (e) => {
+    windowOnClick(e);
+  });
+  
+  document.querySelector('.bundle__products').addEventListener('click', function(e){
+  	const addBtn = e.target.closest('.AddtoCart');
+    const addBtnText = addBtn.value;
+    if (!addBtn) return;
+    e.preventDefault();
+    const id = addBtn.closest('form').querySelector('input[name="id"]').value;
+    
+    if (!id) return;
+    
+    Shopify.addItem(id,1, function(e) {
+      addBtn.value = 'Item added';
+      setTimeout(function(){
+        addBtn.value = addBtnText; 
+      },1000);
+    });
+  });
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Upsell",
+    "settings": [
+	  {
+        "type": "collection",
+        "id": "gold_collection",
+        "label": "Gold bundle upsell collection"
+       },
+       {
+        "type": "collection",
+        "id": "silver_collection",
+        "label": "Silver bundle upsell collection"
+       },
+	   {
+        "type": "collection",
+        "id": "collection",
+        "label": "upsell collection"
+       }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
